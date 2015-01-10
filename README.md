@@ -1,16 +1,20 @@
-Trendrr
+Rankrr
 =======================
+A Ping-pong ranking app
+
 
 Questions
 -----------------
-- Where do users get written to? (how to follow trails...)
 - Good MongoDB tutorials?
+
 
 Milestones
 -----------------
 
-- Clean up design
-- gulp
-- Salesguy @ 50% w/ 2 per month @ $2,000 license
-- Make $2,000/month 
-- Re-factor to remove from firebase 
+- input users into DB
+- Display them on page
+- Clean up design to look good
+- Email "challenge" with link to "challenge" page
+- Both have to report the same outcome for it to be counted as good
+- Implement "wager" feature
+- Mass challenge for a Jane-wide tournament - telling you who you play next etc...

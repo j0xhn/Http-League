@@ -115,7 +115,7 @@ app.use(function(req, res, next) {
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: week }));
 
 /**
- * trendrr routes
+ * rankrr routes
  */
 app.get('/', appController.index);
 
