@@ -1,11 +1,11 @@
-// Node Controller to serve up HTML
-var contestants = require('../models/Contestant');
+var User = require('../models/User');
 
+// Node Controller to serve up HTML
 exports.index = function(req, res) {
-	contestants.find({}, function(err, contestants){
+	User.find({}, function(err, users){
 		res.render('app', {
 			title: 'Home',
-			contestants: contestants
+			users: users
 		});
 	})
 };

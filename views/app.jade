@@ -1,5 +1,39 @@
 extends layout
 
 block content
-    //include html/app.html
-    p #{contestants}
+	.landing.about-page
+		section.banner
+			p.text-box
+				<span>text here</span> other text here
+			div(class="fb-like" data-share="true" data-width="450" data-show-faces="true")
+	
+		section.users
+			.item
+				.person
+				//- 			img(src=#{})
+				//- <section class="people">
+				//-    <div class="content">
+
+				//-        <div class="item">
+				//-            <div class="person">
+				//-                <img src="https://graph.facebook.com/1581162401/picture?width=200&height=200" alt="" />
+				//-                <p class="italic mar10b">Breane Cannon</p>
+				//-                <h5 class="txt-grayLight">DEAL SUPPORT</h5>
+				//-                <div class="icon bgMint animated fadeInUp">
+				//-                    <i class="fa fa-chevron-up txt-white"></i>
+				//-                </div>
+				//-            </div>
+
+				//-            <div class="about">
+				//-                <svg width="20px" height="20px" viewBox="0 0 400 400"> <g stroke="#555555"><line x1="100" y1="300" x2="300" y2="100" stroke-width="20"></line> <line x1="100" y1="100" x2="300" y2="300" stroke-width="20"></line></g></svg>
+				//-                <h5 class="mar30t">FAVORITE COLOR</h5>
+				//-                <p>Orange</p>
+
+				//-                <h5>FASHION ADVICE</h5>
+				//-                <p>Wear what you feel confident wearing.</p>
+
+				//-                <h5>NATURAL HAIR COLOR</h5>
+				//-                <p>Dirty Blonde</p>
+				//-            </div>
+				//-        </div>		
+		p #{users}
