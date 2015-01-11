@@ -19,7 +19,9 @@ var userSchema = new mongoose.Schema({
     gender: { type: String, default: '' },
     location: { type: String, default: '' },
     website: { type: String, default: '' },
-    picture: { type: String, default: '' }
+    picture: { type: String, default: '' },
+    company: { type: String, default: '' },
+    score:    { type: Number, default: 0},
   },
 
   resetPasswordToken: String,

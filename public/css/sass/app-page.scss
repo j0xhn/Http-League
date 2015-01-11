@@ -1,0 +1,306 @@
+
+	//	------------------------------------
+	//	#Animation
+	//	------------------------------------
+
+	@-webkit-keyframes banner-loop { 0% { transform: translateY(0); } 100% { transform: translateY(-700px); } }
+	@-moz-keyframes banner-loop { 0% { transform: translateY(0); } 100% { transform: translateY(-700px); } }
+	@-o-keyframes banner-loop { 0% { transform: translateY(0); } 100% { transform: translateY(-700px); } }
+	@keyframes banner-loop { 0% { transform: translateY(0); } 100% { transform: translateY(-700px); } }
+
+.app-page {
+	body{
+		padding: 0; //removes top padding that made page start after header
+	}
+	//	------------------------------------
+	//	#GENERAL
+	//	------------------------------------
+	$grid-margin: 3.33%;
+	$item-height: 336px;
+	$inner-grid: 762px;
+
+	.content {
+		padding-top: 0px;
+		overflow: auto;
+	}
+
+	.banner {
+		position: relative;
+		overflow: hidden;
+		padding: 60px 0 30px;
+
+
+		&:before {
+			content: "";
+			position: absolute;
+			width: 100%;
+			height: 200%;
+			top: 0;
+			left: 0;
+			z-index: -1;
+			background: url(Images/banners/scrolling-deals-banner-01.jpg) repeat-x top center cover;
+
+		}
+
+		&.start-scroll {}
+		.text-box {
+			padding: 40px 30px;
+			max-width: $inner-grid;
+			margin: 0 auto;
+			background-color: rgba( 255, 255, 255, .92);
+			box-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.5);
+			color: $gray;
+			line-height: 29px;
+			font-size: 19px;
+		}
+	}
+	
+	//	------------------------------------
+	//	#PEOPLE GRID
+	//	------------------------------------
+	.users {
+		padding: 0; // offsets padding on section that comes automatically with janeMobileFirst
+		.content {
+			padding: $grid-margin;
+		}
+	}
+
+
+	.item {
+		width: 100%;
+		height: $item-height;
+		margin: 0 0 $grid-margin 0;
+		float: left;
+		background-color: white;
+		position: relative;
+		overflow: hidden;
+		cursor: pointer;
+
+		&:last-child {
+			margin: 0 20px 0 0;
+		}
+
+		.person {
+			height: $item-height;
+
+			img {
+				position: relative;
+				margin: 40px 0 20px 0;
+				border-radius: 50%;
+				width: 175px;
+				border: 4px solid white;
+				box-shadow: 0px 0px 0pt 4pt $grayLighter;
+			}
+
+			p {
+				font-size: 26px;
+				color: $gray;
+				-webkit-transition-duration: .2s;
+				transition-duration: .2s;
+			}
+
+			h5 {
+				font-size: 12px;
+				margin-bottom: 50px;
+			}
+
+			.icon {
+				display: none;
+				border-radius: 50%;
+				width: 60px;
+				height: 60px;
+				position: absolute;
+				left: 0;
+				right: 0;
+				bottom: -30px;
+				margin-left: auto;
+				margin-right: auto;
+				animation-duration: .3s;
+				-webkit-animation-duration: .3s;
+
+				.fa {
+					line-height: 33px;
+					font-size: 19px;
+				}
+			}
+		}
+
+
+
+		&.hover {
+			.person {
+				p {
+					color: $jMint;
+				}
+
+				.icon {
+					display: block;
+				}
+			}
+		}
+
+		&.clicked {
+
+			.about {
+				transform: translateY(-$item-height);
+				-webkit-transform: translateY(-$item-height);
+				transition-duration: .5s;
+				-webkit-transition-duration: .5s;
+			}
+		}
+	}
+
+	.about {
+		display: block;
+		background-color: rgba(124, 216, 203, 0.95);
+		width: 100%;
+		height: $item-height;
+		padding: 10px;
+		transition-duration: .7s;
+		-webkit-transition-duration: .7s;
+
+		svg {
+			opacity: .8;
+			float: right;
+		}
+
+
+		h5 {
+			font-size: 12px;
+			margin-bottom: 10px;
+			color: $gray;
+		}
+
+		p {
+			color: white;
+			font-size: 20px;
+			max-width: 266px;
+			margin-left: auto;
+			margin-right: auto;
+			font-style: italic;
+			margin-bottom: 33px;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+	}
+	/*------------------------------------*\
+
+		#RESPONSIVE
+
+	\*------------------------------------*/
+	@media only screen and (min-width: 300px ) {
+	}
+
+	@media only screen and (min-width: 530px ) {
+		$grid-margin: 3%;
+
+		.item {
+			width: 48.3%;
+			margin: 0 $grid-margin $grid-margin 0;
+
+			&:nth-child(2n + 2) {
+				margin-right: 0;
+			}
+		}
+	}
+
+	@media only screen and (min-width : 768px ) {
+		
+
+
+	}
+	/* Medium Devices, Desktops */
+	@media only screen and (min-width : 992px) {
+		section {
+			padding: 85px 0;
+		}
+
+		.blurb {
+			padding: 0;
+		}
+
+		.banner {
+			padding: 100px 0;
+			&:before {
+				-webkit-background-size: auto;
+				-moz-background-size: auto;
+				-o-background-size: auto;
+				background-size: auto;
+			}
+			&.start-scroll {
+				&:before {
+					-webkit-animation: banner-loop 40s linear infinite;
+					-moz-animation:    banner-loop 40s linear infinite;
+					-o-animation:      banner-loop 40s linear infinite;
+					animation:         banner-loop 40s linear infinite;
+				}
+			}
+			.text-box {
+				font-size: 26px;
+				line-height: 37px;
+				padding: 65px;
+				max-width: $inner-grid;
+			}
+		}
+
+		.tabs {
+			a {
+				padding: 33px 0;
+				font-size: 17px;
+				margin-bottom: 70px;
+			}
+		}
+
+		p {
+			font-size: 18px;
+			line-height: 30px;
+		}
+
+		$grid-margin: 2%;
+
+		.item {
+			width: 31.1%;
+			margin-right: $grid-margin;
+
+			&:nth-child(2n + 2) {
+				margin-right: $grid-margin;
+			}
+
+			&:nth-child(3n + 3) {
+				margin-right: 0;
+			}
+		}
+	}
+	/* Large Devices, Desktops */
+	@media only screen and (min-width : 1200px) {
+		.people .content {
+			padding-top: 44px;
+		}
+
+		; //stops top from growing based on width
+		.item {
+			width: 23.5%;
+
+			&:nth-child(2n + 2) {
+				margin-right: $grid-margin;
+			}
+
+			&:nth-child(3n + 3) {
+				margin-right: $grid-margin;
+			}
+
+			&:nth-child(4n + 4) {
+				margin-right: 0;
+			}
+		}
+	}
+	/* Large Devices, Desktops */
+	@media only screen and (min-width : 1367px) {
+		.content { //header styling has strange bump out at this width
+			padding: 0;
+		}
+	}
+}
+	// end of about page

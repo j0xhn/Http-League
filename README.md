@@ -1,18 +1,16 @@
-Rankrr
+HTTP - Hacker's Table Tennis Posse
 =======================
-A Ping-pong ranking app
+A Ping-pong ranking app for Jane.com
+
 
 
 Questions
 -----------------
-- Good MongoDB tutorials?
 
 
 Milestones
 -----------------
-
-- input users into DB
-- Display them on page
+- Bring in own font (googleapis REALLY slow)
 - Clean up design to look good
 - Email "challenge" with link to "challenge" page
 - Both have to report the same outcome for it to be counted as good

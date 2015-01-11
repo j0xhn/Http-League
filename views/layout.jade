@@ -7,18 +7,24 @@ html
     meta(name='description', content='')
     meta(name='csrf-token', content=_csrf)
     meta(name='author', content='')
-    if title == "Home"
-      title Rankrr
-    else
-      title #{title} | Rankrr
-    != css('styles')
     link(rel="icon" type="image/png" href= assetPath('images/logo-16.png')) 
+    if title == "Home"
+      title HTTP
+    else
+      title #{title} | HTTP
+
+    //- style-sheet area 
+    //- styles was included in hackathon starter 
+    //- includes things like bootstrap, navbar and other basic template, ion-icon etc...
+    //- everything else custom, is changed in master.scss file /css/master.scss
+    != css('styles') 
+    != css('master') 
+
   body
     #wrap
       include partials/navbar
-      .container
-        include partials/flash
-        block content
-    include partials/footer
+      include partials/flash
+      block content
+      include partials/footer
 
     != js('application')

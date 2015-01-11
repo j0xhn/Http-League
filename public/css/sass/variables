@@ -1,0 +1,230 @@
+//
+// HTTP Variables (many overriding boostrap)
+//
+
+// Accent colors
+	
+	$grayDarker:            lighten(#000, 13.5%) !default; // #222
+	$grayDark:              lighten(#000, 20%) !default;   // #333
+	$gray:                  lighten(#000, 33.5%) !default; // #555
+	$grayLight:             lighten(#000, 60%) !default;   // #999
+	$grayLighter:           lighten(#000, 93.5%) !default; // #eee
+	
+
+	// legacy
+	$gray-darker:           lighten(#000, 13.5%) !default; // #222
+	$gray-dark:				lighten(#000, 20%) !default;   // #333
+	$gray-light:			lighten(#000, 60%) !default;   // #999
+	$gray-lighter:			lighten(#000, 93.5%) !default; // #eee
+	
+	
+	$jMint:					#7cd8cb;
+	$jMintDarker:           #4ac8b6;
+	$jMintLighter:			#9ae0d6;
+	$jPink:					#ff8188;
+	$jCoral:				$jPink;
+	$jPurple:				#B384BA;
+	$jYellow:				#F8D57B;
+	$jBlue:					#95d2e9;
+	$jBlueLighter:			#b5e2e2;
+	$jOrange:				#f7a33c;
+	$jIndigo:				#061b2b;
+    $jGold:                 #ffc261;
+
+	$alert-danger-bg:		#9ae0d6;
+	$brand-primary:         $jMint;
+	//	$brand-success:         #5cb85c;
+	$brand-warning:         $jGold;
+	$brand-danger:          $jCoral;
+	//	$brand-info:            #5bc0de;
+
+	$black:                 #000;
+	$white:                 #fff;
+	$blue:                  $jBlue;
+	$blueDark:              #0064cd;
+	$green:                 #86d5a2;
+	$red:                   $jCoral;
+	$yellow:                $jYellow;
+	$orange:                $jOrange;
+	$pink:                  $jPink;
+	$purple:                $jPurple;
+
+	$border-color:			#E5E5E5;
+
+// Links
+
+	$link-color:            $jMint;
+	$link-hover-color:      darken($link-color, 15%);
+
+// Typography
+
+	$font-family-sans-serif:  "Ideal Sans SSm A", "Ideal Sans SSm B", sans-serif;
+	$font-family-serif:       $font-family-sans-serif;
+	$font-family-monospace:   $font-family-sans-serif;
+	$font-family-base:        $font-family-sans-serif;
+
+	$font-size-base:          14px;
+	$font-size-large:         $font-size-base + 2;
+	$font-size-small:         $font-size-base - 2;
+
+	$line-height-base:        24px;
+
+	$headings-font-family:    "Gotham SSm A", "Gotham SSm B", sans-serif;
+	$headings-font-weight:    300;
+	$headings-line-height:    $line-height-base;
+
+// Buttons
+
+	$btn-font-weight:                $headings-font-weight;
+
+	$btn-default-color:              #333;
+	$btn-default-bg:                 #eee;
+	$btn-default-border:             #ddd;
+
+	$btn-primary-color:              #fff;
+	$btn-primary-bg:                 $jMint;
+	$btn-primary-border:             $jMint;
+
+	//	$btn-success-color:              #fff;
+	//	$btn-success-bg:                 $brand-success;
+	//	$btn-success-border:             darken($btn-success-bg, 5%);
+
+	$btn-warning-color:              #fff;
+	$btn-warning-bg:                 $brand-warning;
+	$btn-warning-border:             $brand-warning;
+
+	$btn-danger-color:               #fff;
+	$btn-danger-bg:                  $jPink;
+	$btn-danger-border:              $jPink;
+
+	//	$btn-info-color:                 #fff;
+	//	$btn-info-bg:                    $brand-info;
+	//	$btn-info-border:                darken($btn-info-bg, 5%);
+
+	$btn-link-disabled-color:        $gray-light;
+
+	$btn-blue-lighter-color:              #fff;
+	$btn-blue-lighter-bg:                 $jBlueLighter;
+	$btn-blue-lighter-border:             $jBlueLighter;
+
+	// Custom Buttons
+
+// Form states and alerts
+
+	//	$state-warning-text:             #c09853 !default;
+	//	$state-warning-bg:               #fcf8e3 !default;
+	//	$state-warning-border:           darken(adjust-hue($state-warning-bg, -10), 3%) !default;
+
+	$state-danger-text:              darken($jCoral, 10%);
+	$state-danger-bg:                lighten($jCoral, 25%);
+	$state-danger-border:            darken(adjust-hue($state-danger-bg, -10), 3%) !default;
+
+	//	$state-success-text:             #468847 !default;
+	//	$state-success-bg:               #dff0d8 !default;
+	//	$state-success-border:           darken(adjust-hue($state-success-bg, -10), 5%) !default;
+
+	//	$state-info-text:                #3a87ad !default;
+	//	$state-info-bg:                  #d9edf7 !default;
+	//	$state-info-border:              darken(adjust-hue($state-info-bg, -10), 7%) !default;
+
+	$input-border-color: #dddddd;
+
+// Alerts
+
+	//	$alert-success-bg:            $state-success-bg !default;
+	//	$alert-success-text:          $state-success-text !default;
+	//	$alert-success-border:        $state-success-border !default;
+
+	//	$alert-info-bg:               $state-info-bg !default;
+	//	$alert-info-text:             $state-info-text !default;
+	//	$alert-info-border:           $state-info-border !default;
+
+	//	$alert-warning-bg:            $state-warning-bg !default;
+	//	$alert-warning-text:          $state-warning-text !default;
+	//	$alert-warning-border:        $state-warning-border !default;
+
+	$alert-danger-bg:             lighten($jCoral, 25%);
+	$alert-danger-text:           darken($jCoral, 10%);
+	$alert-danger-border:         lighten($jCoral, 15%);
+
+// Custom Mixins
+
+	// Added because Bootstrap 3.0 doesn't have this. --
+	
+	@mixin animation ($name, $ease, $duration, $delay, $loop) { -webkit-animation: $name $ease $duration $delay $loop; -moz-animation: $name $ease $duration $delay $loop; -ms-animation: $name $ease $duration $delay $loop; animation: $name $ease $duration $delay $loop; }
+	@mixin scale-xy($x,$y) { -webkit-transform: scale($x,$y); -ms-transform: scale($x,$y); transform: scale($x,$y); }
+	
+	// Used for the Main Nav Menu icons --
+	
+	@mixin scale-translate($scale, $x, $y) { -webkit-transform: scale($scale) translate($x, $y); -moz-transform: scale($scale) translate($x, $y); -ms-transform: scale($scale) translate($x, $y); -o-transform: scale($scale) translate($x, $y); transform: scale($scale) translate($x, $y); }
+	@mixin scale-rotate($scale, $rotate) { -webkit-transform: scale($scale) rotate($rotate); -moz-transform: scale($scale) rotate($rotate); -ms-transform: scale($scale) rotate($rotate); -o-transform: scale($scale) rotate($rotate); transform: scale($scale) rotate($rotate); }
+	
+	// Added to have custom transitions with specific properties -- http://compass-style.org/reference/compass/css3/transition/
+	
+	@mixin transition-property($property-1: $default-transition-property, $property-2: false, $property-3: false, $property-4: false, $property-5: false, $property-6: false, $property-7: false, $property-8: false, $property-9: false, $property-10: false) {
+		@if type-of($property-1) == string { $property-1: unquote($property-1);	}
+		$properties: compact($property-1, $property-2, $property-3, $property-4, $property-5, $property-6, $property-7, $property-8, $property-9, $property-10);
+		@if $experimental-support-for-webkit { -webkit-transition-property: prefixed-for-transition(-webkit, $properties); }
+		@if $experimental-support-for-mozilla { -moz-transition-property: prefixed-for-transition(-moz, $properties); }
+		@if $experimental-support-for-opera { -o-transition-property: prefixed-for-transition(-o, $properties); }
+		transition-property: $properties;
+	}
+	
+	@mixin transition-timing-function($function-1: $default-transition-function, $function-2: false, $function-3: false, $function-4: false, $function-5: false, $function-6: false, $function-7: false, $function-8: false, $function-9: false, $function-10: false) {
+		$function-1: unquote($function-1);
+		$functions: compact($function-1, $function-2, $function-3, $function-4, $function-5, $function-6, $function-7, $function-8, $function-9, $function-10);
+		@include experimental(transition-timing-function, $functions, -moz, -webkit, -o, not -ms, not -khtml, official);
+	}
+	@mixin background-size-cover() { -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; }
+
+	@mixin transform-origin($y, $x) { transform-origin: $y $x; -webkit-transform-origin: $y $x; -moz-transform-origin: $y $x; -ms-transform-origin: $y $x; -o-transform-origin: $y $x; }
+	
+	@mixin circleRadius($amount) {
+		-moz-border-radius: $amount;
+		-webkit-border-radius: $amount;
+		border-radius: $amount;
+	}
+
+	@mixin transition($transition...) {
+	  -webkit-transition: $transition;
+			  transition: $transition;
+	}
+	
+	@mixin button-variant($color, $background, $border) {
+		color: $color;
+		background-color: $background;
+		border-color: $border;
+
+		&:hover,
+		&:focus,
+		&:active,
+		&.active {
+		color: $color;
+		background-color: darken($background, 8%);
+			border-color: darken($border, 12%);
+		}
+		.open & { &.dropdown-toggle {
+		color: $color;
+		background-color: darken($background, 8%);
+			border-color: darken($border, 12%);
+		} }
+		&:active,
+		&.active {
+		background-image: none;
+		}
+		.open & { &.dropdown-toggle {
+		background-image: none;
+		} }
+		&.disabled,
+		&[disabled],
+		fieldset[disabled] & {
+		&,
+		&:hover,
+		&:focus,
+		&:active,
+		&.active {
+			background-color: $background;
+				border-color: $border;
+			}
+		}
+	}
