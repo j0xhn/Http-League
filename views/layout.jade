@@ -7,8 +7,12 @@ html
     meta(name='description', content='')
     meta(name='csrf-token', content=_csrf)
     meta(name='author', content='')
-    title #{title} | Rankrr
+    if title == "Home"
+      title Rankrr
+    else
+      title #{title} | Rankrr
     != css('styles')
+    link(rel="icon" type="image/png" href= assetPath('images/logo-16.png')) 
   body
     #wrap
       include partials/navbar

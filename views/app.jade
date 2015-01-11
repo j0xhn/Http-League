@@ -3,13 +3,13 @@ extends layout
 block content
 	.landing.about-page
 		section.banner
-			p.text-box
-				<span>text here</span> other text here
-			div(class="fb-like" data-share="true" data-width="450" data-show-faces="true")
-	
+			
 		section.users
-			.item
-				.person
+			each val in users
+				.item
+					.person
+						img(src = val.profile.picture)
+
 				//- 			img(src=#{})
 				//- <section class="people">
 				//-    <div class="content">
@@ -36,4 +36,4 @@ block content
 				//-                <p>Dirty Blonde</p>
 				//-            </div>
 				//-        </div>		
-		p #{users}
+				
