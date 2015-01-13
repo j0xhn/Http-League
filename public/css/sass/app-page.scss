@@ -19,39 +19,22 @@
 	$item-height: 336px;
 	$inner-grid: 762px;
 
-	.content {
-		padding-top: 0px;
-		overflow: auto;
-	}
-
 	.banner {
 		position: relative;
 		overflow: hidden;
-		padding: 60px 0 30px;
+		padding: 40px 0 30px;
 
-
-		&:before {
-			content: "";
-			position: absolute;
-			width: 100%;
-			height: 200%;
-			top: 0;
-			left: 0;
-			z-index: -1;
-			background: url(Images/banners/scrolling-deals-banner-01.jpg) repeat-x top center cover;
-
+		.words{
+			text-align: center;
+			p{
+				max-width: 400px;
+				margin: 0 auto;
+			}
 		}
 
-		&.start-scroll {}
-		.text-box {
-			padding: 40px 30px;
-			max-width: $inner-grid;
-			margin: 0 auto;
-			background-color: rgba( 255, 255, 255, .92);
-			box-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.5);
-			color: $gray;
-			line-height: 29px;
-			font-size: 19px;
+		img {
+			width: 100%;
+			max-width: 300px;
 		}
 	}
 	
@@ -82,6 +65,7 @@
 
 		.person {
 			height: $item-height;
+			text-align: center;
 
 			img {
 				position: relative;
@@ -207,6 +191,13 @@
 	}
 
 	@media only screen and (min-width : 768px ) {
+
+		.banner{
+			.words{
+				padding-top: 30px;
+				text-align: left;
+			}
+		}
 		
 
 
@@ -222,34 +213,12 @@
 		}
 
 		.banner {
-			padding: 100px 0;
-			&:before {
-				-webkit-background-size: auto;
-				-moz-background-size: auto;
-				-o-background-size: auto;
-				background-size: auto;
-			}
-			&.start-scroll {
-				&:before {
-					-webkit-animation: banner-loop 40s linear infinite;
-					-moz-animation:    banner-loop 40s linear infinite;
-					-o-animation:      banner-loop 40s linear infinite;
-					animation:         banner-loop 40s linear infinite;
+			padding: 50px 0;
+			.words{
+				text-align: left;
+				p{
+					margin: 0;
 				}
-			}
-			.text-box {
-				font-size: 26px;
-				line-height: 37px;
-				padding: 65px;
-				max-width: $inner-grid;
-			}
-		}
-
-		.tabs {
-			a {
-				padding: 33px 0;
-				font-size: 17px;
-				margin-bottom: 70px;
 			}
 		}
 

@@ -3,16 +3,22 @@ extends layout
 block content
 	.app-page
 		section.banner.bgMint
-			h1.tac.txt-white Hacker Table Tennis Pals
-		.container
-			section.users
+			.content.max768
+				.col-sm-6.tac
+					img(src=assetPath('images/logo-fancy-600.png'))
+				.col-sm-6.txt-white.words
+					h1 Ping Pong at it's Nerdiest
+					p Find the best ping pong players from accross the land and challenge them to a duel of pure, unadulterated, pong skill.
+		
+		section.users
+			.content
 				each val in users
 					.item
 						.person
 							img(src = val.profile.picture)
 							p #{val.profile.name}
 							h5 #{val.profile.company}
-							div.icon
+							div.icon.bgMint
 								span.ion-chevron-up
 
 						.about

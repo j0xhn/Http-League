@@ -1,1 +1,40 @@
-// put overrides here
+//- hackathon overrides here
+.content{
+	width: 100%;
+	margin: 0 auto;
+	position: relative;
+	padding: 0 10px;
+	max-width: 1340px;
+}
+
+
+/*------------------------------------*\
+
+	#RESPONSIVE
+
+\*------------------------------------*/
+@media only screen and (min-width: 300px ) {
+}
+
+@media only screen and (min-width: 530px ) {
+
+}
+
+@media only screen and (min-width : 768px ) {
+
+}
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+
+}
+/* Large Devices, Desktops */
+@media only screen and (min-width : 1200px) {
+
+}
+/* Large Devices, Desktops */
+@media only screen and (min-width : 1367px) {
+	.content { //header styling has strange bump out at this width
+		padding: 0;
+	}
+}
+
