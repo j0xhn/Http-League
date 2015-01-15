@@ -15,12 +15,13 @@ block content
 				each val in users
 					.item
 						.person
+							p.score-space #{val.profile.score}
 							img(src = val.profile.picture)
 							p #{val.profile.name}
 							h5 #{val.profile.company}
 							div.icon.bgMint
 								span.ion-chevron-up
-
+						
 						.about
 							span.ion-ios-close-empty
 							h5 Location
