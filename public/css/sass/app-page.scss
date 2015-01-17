@@ -48,25 +48,22 @@
 		}
 	}
 
-
+	
 	.item {
 		width: 100%;
 		height: $item-height;
 		margin: 0 0 $grid-margin 0;
 		float: left;
-		background-color: white;
+		background-color: #FFF;
 		position: relative;
 		overflow: hidden;
 		cursor: pointer;
-
-		&:last-child {
-			margin: 0 20px 0 0;
-		}
-
+		&:last-child { margin: 0 20px 0 0; }
 		.person {
 			height: $item-height;
+			position: relative;
+			z-index: 20;
 			text-align: center;
-
 			.score-space{
 				border-radius: 6px;
 				color: $jPink;
@@ -81,7 +78,6 @@
 				max-width: 60px;
 				z-index: 1;
 			}
-
 			img {
 				position: relative;
 				margin: 40px 0 20px 0;
@@ -101,87 +97,71 @@
 				font-size: 12px;
 				margin-bottom: 50px;
 			}
-
 			.icon {
-				display: none;
 				border-radius: 50%;
 				width: 60px;
 				height: 60px;
 				position: absolute;
 				left: 0;
 				right: 0;
-				bottom: -30px;
+				bottom: 0;
 				margin-left: auto;
 				margin-right: auto;
-	
-
+				@include translate(0,60px);
+				@include transition(300ms ease transform);
 				.fa {
 					line-height: 33px;
 					font-size: 19px;
 				}
 			}
 		}
+		.about {
+			background: rgba(124, 216, 203, 0.95);
+			position: relative;
+			width: 100%;
+			height: $item-height;
+			padding: 40px 30px 0px;
+			z-index: 30;
+			@include transition-duration(300ms);
+			@include transition-property(transform);
+			@include transition-timing-function(ease);
+			svg {
+				opacity: .8;
+				position: absolute;
+				width: 20px;
+				height: 20px;
+				top: 10px;
+				right: 10px;
+				z-index: 40;
+				@include transition(300ms ease transform);
+				&:hover {
+					@include rotate(90deg);
+				}
+			}
+			h5 {
+				font-size: 12px;
+				margin-bottom: 10px;
+				color: $gray;
+			}
+			p {
+				color: #FFF;
+				font-size: 20px;
+				margin: 0 auto 20px;
+				line-height: 30px;
+				font-style: italic;
+				&:last-child { margin-bottom: 0; }
+			}
+		}
 
-
-
-		&.hover {
+		&:hover {
 			.person {
-				p {
-					color: $jMint;
-				}
-
-				.icon {
-					display: block;
-				}
+				p { color: $jMint; }
+				.icon { @include translate(0,30px); }
 			}
 		}
-
-		&.clicked {
-
-			.about {
-				transform: translateY(-$item-height);
-				-webkit-transform: translateY(-$item-height);
-				transition-duration: .5s;
-				-webkit-transition-duration: .5s;
-			}
-		}
+		&.clicked { .about { @include translate(0,-336px); } }
 	}
-
-	.about {
-		display: block;
-		background-color: rgba(124, 216, 203, 0.95);
-		width: 100%;
-		height: $item-height;
-		padding: 10px;
-		transition-duration: .7s;
-		-webkit-transition-duration: .7s;
-
-		svg {
-			opacity: .8;
-			float: right;
-		}
-
-
-		h5 {
-			font-size: 12px;
-			margin-bottom: 10px;
-			color: $gray;
-		}
-
-		p {
-			color: white;
-			font-size: 20px;
-			max-width: 266px;
-			margin-left: auto;
-			margin-right: auto;
-			font-style: italic;
-			margin-bottom: 33px;
-
-			&:last-child {
-				margin-bottom: 0;
-			}
-		}
-	}
+	
 	/*------------------------------------*\
 
 		#RESPONSIVE
