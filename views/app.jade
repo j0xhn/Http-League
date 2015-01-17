@@ -17,11 +17,26 @@ block content
 						.person
 							p.score-space #{val.profile.score}
 							img(src = val.profile.picture)
-							p #{val.profile.name}
+							p.name #{val.profile.name}
 							h5 #{val.profile.company}
-							div.icon.btn.bgMint
-								| record score
-						
+						.record-score
+							p.f16 record score
+							p.o4
+								| I hereby promise that the scores about to be entered below
+								| are an honest and true representation of
+								| a ping pong match that was played. Cross my heart  
+								| hope to die, stick a needle in my eye.
+							.form
+								.player
+									img(src='#{user.profile.picture}')
+									|wins
+									input
+								.player
+									img(src='#{val.profile.picture}')
+									|wins
+									input
+
+
 						.about
 							span.ion-ios-close-empty
 							h5 Location

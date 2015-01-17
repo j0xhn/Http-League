@@ -177,7 +177,7 @@
 	      -ms-transform: rotate($degrees); // IE9+
 	          transform: rotate($degrees);
 	}
-	
+
 	@mixin background-size-cover() { -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; }
 
 	@mixin transform-origin($y, $x) { transform-origin: $y $x; -webkit-transform-origin: $y $x; -moz-transform-origin: $y $x; -ms-transform-origin: $y $x; -o-transform-origin: $y $x; }
