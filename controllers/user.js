@@ -12,11 +12,50 @@ var secrets = require('../config/secrets');
  */
 
 exports.recordScore = function(req, res, next) {
-  var opponent = User.findById(req.param.opponent);
-  var userWins = req.body.userWins;
-  var opponentWins = req.body.opponentWins;
-  console.log(userWins, opponentWins, opponent.id);
+  var match = {};
+  var date = Date.now();
+  var opponent = User.findById(req.params.opponent);
+  var uid = req.user.id;
+  var oid = req.params.opponent;
+  var uw = req.body.userWins;
+  var ow = req.body.opponentWins;
 
+  if (uid === oid) return;
+
+  if (uw > ow){
+    var winnerID    = uid
+      , winnerScore = uw
+      , loserID     = oid
+      , loserScore  = ow;
+  } else {
+    var winnerID    = oid
+      , winnerScore = ow
+      , loserID     = uid
+      , loserScore  = uw;
+  }
+
+  match[winnerID] = winnerScore;
+  match[loserID]  = loserScore; 
+
+  User.findById(req.user.id, function(err, user) {
+    user.matches[date] = match;
+    user.save(function(err) {
+      console.log(user.matches)
+        if (err) return next(err);
+        req.flash('success', { msg: 'Profile information updated.' });
+      });
+
+  });
+
+  User.findById(oid, function(err, user) {
+    user.matches[date] = match;
+     user.save(function(err) {
+      console.log(user.matches)
+        if (err) return next(err);
+        req.flash('success', { msg: 'Profile information updated.' });
+      });
+    
+  });
 };
 
 //   User.findById(req.user.id, function(err, user) {

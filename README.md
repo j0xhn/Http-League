@@ -6,7 +6,9 @@ A Ping-pong ranking app for Jane.com
 
 Questions
 -----------------
-- I can get the POST of a score submital to go just fine using express, but it always reloads the page.  When I try via ajax it puts the url up top.  Both are behaviors I want to remove, but how?
+- I can get the POST of a score submittal to go just fine using express, but it always reloads the page.  When I try via ajax it puts the url up top.  Both are behaviors I want to remove, but how?
+- How to write a new key:value pair to whole collection
+- How to write value to document and have data persist
 
 MVP Tasks
 -----------------
