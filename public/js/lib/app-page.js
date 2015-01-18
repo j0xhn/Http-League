@@ -17,3 +17,9 @@ $('.item .record-score').on({
         $(this).toggleClass('clicked');
     }
 });
+
+$('.item .record-score input').on({ // stops it from going up parent tree and registering click to .record-store
+	click: function(e){
+		e.stopPropagation();
+	}
+})

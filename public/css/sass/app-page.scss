@@ -128,18 +128,39 @@
 				line-height: 20px;
 				font-size: 12px;
 			}
-
-			img{
-				width: 50px;
-			
-			}
 			.player{
 				display: inline-block;
 				margin-left: 20px;
 				margin-right: 20px;
 			}
+			img{
+				width: 50px;
+				display: block; // so they stack vertically
+				border-radius: 10px;
+				margin-bottom: 5px;
+			
+			}
 			input{
 				width: 50px;
+				display: block; // so they stack vertically
+				text-align: center;
+				color: $gray;
+				border: none;
+				outline: none;
+				border-radius: 3px;
+				opacity: .8;
+				&:focus{
+					opacity: 1;
+				}
+			}
+			.btn{
+				opacity: .8;
+
+				&:hover{
+					opacity: 1;
+					background-color: white;
+					color: $jMint;
+				}
 			}
 			&:hover{
 				background-color: $jMintDarker;

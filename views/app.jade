@@ -9,7 +9,7 @@ block content
 				.col-sm-6.txt-white.words
 					h1 Ping Pong at it's Nerdiest
 					p Find the best ping pong players from accross the land and challenge them to a duel of pure, unadulterated, pong skill.
-		
+					
 		section.users
 			.content
 				each val in users
@@ -20,23 +20,32 @@ block content
 							p.name #{val.profile.name}
 							h5 #{val.profile.company}
 						.record-score
-							p.f16 record score
-							p.o4
-								| I hereby promise that the scores about to be entered below
-								| are an honest and true representation of
-								| a ping pong match that was played. Cross my heart  
-								| hope to die, stick a needle in my eye.
-							.form
-								.player
-									img(src='#{user.profile.picture}')
-									|wins
-									input
-								.player
-									img(src='#{val.profile.picture}')
-									|wins
-									input
-
-
+							p.f16.pad10b 
+								i.fa.fa-pencil-square-o
+								| record scores
+								if user
+									p.o4.pad10b
+										| I hereby promise that the scores about to be entered below
+										| are an honest and true representation of
+										| a ping pong match that was played. Cross my heart  
+										| hope to die, stick a needle in my eye.
+									.form.pad20b
+										.player
+											img(src='#{user.profile.picture}')
+											input(placeholder="wins")
+										.player
+											img(src='#{val.profile.picture}')
+											input(placeholder="wins")
+									.btn.bgWhite.txt-mint.full enter
+								else
+									p.o4 To record a score you must be logged in
+									a.btn.btn-block.btn-github.btn-social(href='/auth/github')
+										i.fa.fa-github
+										| Log in with GitHub
+									a.btn.btn-block.btn-facebook.btn-social(href='/auth/facebook')
+										i.fa.fa-facebook
+										| Log in with Facebook
+									
 						.about
 							span.ion-ios-close-empty
 							h5 Location

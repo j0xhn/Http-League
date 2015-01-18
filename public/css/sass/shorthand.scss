@@ -71,6 +71,8 @@
 	.bgOrange		{ background-color: $jOrange; }
 	.bgIndigo		{ background-color: $jIndigo; }
 
+// - - Opacity - -
+
 	.o1 	{ opacity: .1 !important; }
 	.o2 	{ opacity: .2 !important; }
 	.o3 	{ opacity: .3 !important; }
@@ -155,10 +157,7 @@
 	.max992		{ max-width: 992px !important; }
 	.max1100	{ max-width: 1100px !important;}
 	.maxfull	{ max-width: 100% !important; }
-	
-
-	.thirty		{ width: 30% !important; }
-	.seventy	{ width: 70% !important; }
+	.full 		{ width: 100%; }
 
 	.overflow	{overflow: auto;}
 
