@@ -23,3 +23,24 @@ $('.item .record-score input').on({ // stops it from going up parent tree and re
 		e.stopPropagation();
 	}
 })
+
+$('.record-score').on('submit', function(){
+    debugger;
+    $.ajax({
+            type: 'POST',
+            url: '/app/recordScore/' + $(this).opponent.value,
+            data: { userWins: $(this).userWins.value, 
+                    opponentWins: $(this).opponentWins.value },
+            success: function (result) {
+                alert('success');
+                if (result.content == 1) {//location.reload();
+                    alert(name);
+                    //$(this).closest('td').prev().prev().text(name);
+                }
+            },
+            error: function () {
+                alert('error');
+            }
+        });
+        return false;
+})

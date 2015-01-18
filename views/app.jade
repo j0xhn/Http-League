@@ -29,14 +29,18 @@ block content
 										| are an honest and true representation of
 										| a ping pong match that was played. Cross my heart  
 										| hope to die, stick a needle in my eye.
-									.form.pad20b
-										.player
-											img(src='#{user.profile.picture}')
-											input(placeholder="wins")
-										.player
-											img(src='#{val.profile.picture}')
-											input(placeholder="wins")
-									.btn.bgWhite.txt-mint.full enter
+									//form(action='/app/recordScore/#{val._id}', method='POST')
+									form.recordScore
+										.pad20b
+											input(type='hidden', name='opponent', value = val.id )
+											.player
+												img(src='#{user.profile.picture}')
+												input(placeholder="wins" type='userWins', name='userWins', id='userWins')
+											.player
+												img(src='#{val.profile.picture}')
+												input(placeholder="wins" type='opponentWins', name='opponentWins', id='opponentWins')
+										button.btn.bgWhite.txt-mint.full(type='submit') 
+											| enter
 								else
 									p.o4 To record a score you must be logged in
 									a.btn.btn-block.btn-github.btn-social(href='/auth/github')

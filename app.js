@@ -118,12 +118,12 @@ app.use(express.static(path.join(__dirname, 'public'), { maxAge: week }));
  * HTTP routes
  */
 app.get('/', appController.index);
+app.post('/app/recordScore/:opponent', passportConf.isAuthenticated, userController.recordScore);
 
 /**
  * Main routes.
  */
 
-app.get('/landing', homeController.index);
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);
 app.get('/logout', userController.logout);

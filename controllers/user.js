@@ -7,6 +7,35 @@ var User = require('../models/User');
 var secrets = require('../config/secrets');
 
 /**
+ * POST /app/recordScore/:opponent
+ * Record score
+ */
+
+exports.recordScore = function(req, res, next) {
+  var opponent = User.findById(req.param.opponent);
+  var userWins = req.body.userWins;
+  var opponentWins = req.body.opponentWins;
+  console.log(userWins, opponentWins, opponent.id);
+
+};
+
+//   User.findById(req.user.id, function(err, user) {
+//     if (err) return next(err);
+//     user.email = req.body.email || '';
+//     user.profile.name = req.body.name || '';
+//     user.profile.gender = req.body.gender || '';
+//     user.profile.location = req.body.location || '';
+//     user.profile.website = req.body.website || '';
+
+//     user.save(function(err) {
+//       if (err) return next(err);
+//       req.flash('success', { msg: 'Profile information updated.' });
+//       res.redirect('/account');
+//     });
+//   });
+// };
+
+/**
  * GET /login
  * Login page.
  */

@@ -212,7 +212,7 @@
 		}
 
 		&:hover {
-			.record-score { @include translate(0,-35px); }
+			.record-score { @include translate(0,-40px); }
 		}
 		&.clicked { .about { @include translate(0,-$item-height); } }
 	}
