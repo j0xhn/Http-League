@@ -12,13 +12,13 @@ block content
 					
 		section.users
 			.content
-				each val in users
+				each oppenent in users
 					.item
 						.person
-							p.score-space #{val.profile.score}
-							img(src = val.profile.picture)
-							p.name #{val.profile.name}
-							h5 #{val.profile.company}
+							p.score-space #{opponent.profile.score}
+							img(src = opponent.profile.picture)
+							p.name #{opponent.profile.name}
+							h5 #{opponent.profile.company}
 						.record-score
 							p.f16.pad10b 
 								i.fa.fa-pencil-square-o
@@ -36,7 +36,7 @@ block content
 												img(src='#{user.profile.picture}')
 												input(placeholder="wins" type='userWins', name='userWins', id='userWins', autocomplete="off")
 											.player
-												img(src='#{val.profile.picture}')
+												img(src='#{opponent.profile.picture}')
 												input(placeholder="wins" type='opponentWins', name='opponentWins', id='opponentWins', autocomplete="off")
 										button.btn.bgWhite.txt-mint.full(type='submit') 
 											| enter
@@ -51,7 +51,8 @@ block content
 									
 						.about
 							span.ion-ios-close-empty
-							h5 Location
-							p #{val.profile.location}
+							h5 Recent Matches
+								each match in opponent.profile.matches
+							p #{match[0]}
 				
 				

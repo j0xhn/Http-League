@@ -13,6 +13,8 @@ var secrets = require('../config/secrets');
 
 exports.recordScore = function(req, res, next) {
   var match = {};
+  var uMatch = [];
+  var oMatch = {};
   var date = Date.now();
   var opponent = User.findById(req.params.opponent);
   var uid = req.user.id;
@@ -20,59 +22,49 @@ exports.recordScore = function(req, res, next) {
   var uw = req.body.userWins;
   var ow = req.body.opponentWins;
 
-  if (uid === oid) return;
+  if (uid === oid) return; // if user is playing against himself, that's not fair
+
+  uMatch = [date, uw, ow, opponent];
+  oMatch = [date, ow, uw, user];
 
   if (uw > ow){
-    var winnerID    = uid
+    var winner      = req.user
       , winnerScore = uw
-      , loserID     = oid
-      , loserScore  = ow;
+      , winnerLoss  = ow
+      , loser       = opponent
+      , loserScore  = ow
+      , loserLoss   = uw;
   } else {
-    var winnerID    = oid
+    var winner      = opponent
       , winnerScore = ow
-      , loserID     = uid
-      , loserScore  = uw;
+      , winnerLoss  = uw
+      , loser       = req.user
+      , loserScore  = uw
+      , loserLoss   = ow;
   }
 
-  match[winnerID] = winnerScore;
-  match[loserID]  = loserScore; 
+
+
+  match[score] = [winnerScore, loserScore];
+  match[players]  = [winner, loser]; 
+
+
+
+  console.log(match);
 
   User.findById(req.user.id, function(err, user) {
     user.matches[date] = match;
     user.save(function(err) {
-      console.log(user.matches)
-        if (err) return next(err);
-        req.flash('success', { msg: 'Profile information updated.' });
-      });
+      if (err){
+        console.log(err)
+      } 
+    });
+    // save to a "matches" collection
 
-  });
-
-  User.findById(oid, function(err, user) {
-    user.matches[date] = match;
-     user.save(function(err) {
-      console.log(user.matches)
-        if (err) return next(err);
-        req.flash('success', { msg: 'Profile information updated.' });
-      });
-    
+    // ?? if possible can I just have it do nothing?
+    res.redirect('/');
   });
 };
-
-//   User.findById(req.user.id, function(err, user) {
-//     if (err) return next(err);
-//     user.email = req.body.email || '';
-//     user.profile.name = req.body.name || '';
-//     user.profile.gender = req.body.gender || '';
-//     user.profile.location = req.body.location || '';
-//     user.profile.website = req.body.website || '';
-
-//     user.save(function(err) {
-//       if (err) return next(err);
-//       req.flash('success', { msg: 'Profile information updated.' });
-//       res.redirect('/account');
-//     });
-//   });
-// };
 
 /**
  * GET /login
