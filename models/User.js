@@ -24,7 +24,7 @@ var userSchema = new mongoose.Schema({
     score:    { type: Number, default: 0},
   },
 
-  matches: {},
+  matches: Array,
 
   resetPasswordToken: String,
   resetPasswordExpires: Date

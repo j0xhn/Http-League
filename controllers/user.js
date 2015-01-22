@@ -21,8 +21,12 @@ exports.recordScore = function(req, res, next) {
   var oid = req.params.opponent;
   var uw = req.body.userWins;
   var ow = req.body.opponentWins;
+  var createUserObject = function( user ){
+    user.profile.
+  }
 
   if (uid === oid) return; // if user is playing against himself, that's not fair
+
 
   uMatch = [date, uw, ow, opponent];
   oMatch = [date, ow, uw, req.user];
@@ -43,19 +47,21 @@ exports.recordScore = function(req, res, next) {
       , loserLoss   = ow;
   }
 
-
-  match["score"] = [winnerScore, loserScore];
+  match["date"]     = date;
+  match["score"]    = [winnerScore, loserScore];
   match["players"]  = [winner, loser]; 
 
   User.findById(req.user.id, function(err, user) {
-    user.matches[date] = match;
-    user.save(function(err) {
-      if (err){
-        console.log(err)
-      } 
-    res.redirect('/');
+    if (err) return next(err);
+    user.profile.name = 'Normal Name';
+    user.matches.push({ date: match });
 
+    user.save(function(err) {
+      if (err) return next(err);
+      req.flash('success', { msg: 'Profile information updated.' });
+      res.redirect('/');
     });
+
   });
     // save to a "matches" collection
 
