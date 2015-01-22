@@ -25,7 +25,7 @@ exports.recordScore = function(req, res, next) {
   if (uid === oid) return; // if user is playing against himself, that's not fair
 
   uMatch = [date, uw, ow, opponent];
-  oMatch = [date, ow, uw, user];
+  oMatch = [date, ow, uw, req.user];
 
   if (uw > ow){
     var winner      = req.user
@@ -44,13 +44,8 @@ exports.recordScore = function(req, res, next) {
   }
 
 
-
-  match[score] = [winnerScore, loserScore];
-  match[players]  = [winner, loser]; 
-
-
-
-  console.log(match);
+  match["score"] = [winnerScore, loserScore];
+  match["players"]  = [winner, loser]; 
 
   User.findById(req.user.id, function(err, user) {
     user.matches[date] = match;
@@ -58,12 +53,14 @@ exports.recordScore = function(req, res, next) {
       if (err){
         console.log(err)
       } 
+    res.redirect('/');
+
     });
+  });
     // save to a "matches" collection
 
     // ?? if possible can I just have it do nothing?
-    res.redirect('/');
-  });
+
 };
 
 /**
