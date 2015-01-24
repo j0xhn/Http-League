@@ -2,7 +2,11 @@ HTTP - Hacker Table Tennis Pals
 =======================
 A Ping-pong ranking app for Jane.com
 
-
+To Start App
+-----------------
+- open up terminal and run 'mongo'
+- open a new tab and run 'nodemon app.js' (if you don't have nodemon you can use node, but I suggest getting it)
+- to debug run install node-inspector and run 'node-inspector & nodemon --debug app.js'
 
 Questions
 -----------------
