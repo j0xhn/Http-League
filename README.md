@@ -1,6 +1,6 @@
-HTTP - Hacker Table Tennis Pals
+Http League - Hacker Table Tennis Pals
 =======================
-A Ping-pong ranking app for Jane.com
+A Ping-pong ranking app for Jane.com and anyone who dare challenge her greatness.
 
 To Start App
 -----------------
