@@ -1,4 +1,8 @@
 //- hackathon overrides here
+html,body{
+	-webkit-font-smoothing: antialiased;
+}
+
 .content{
 	width: 100%;
 	margin: 0 auto;

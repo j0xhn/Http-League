@@ -5,6 +5,8 @@ var nodemailer = require('nodemailer');
 var passport = require('passport');
 var User = require('../models/User');
 var secrets = require('../config/secrets');
+var mongoose = require('mongoose');
+var db = mongoose.connection
 
 /**
  * POST /app/recordScore/:opponent
@@ -16,23 +18,81 @@ exports.recordScore = function(req, res, next) {
   var uMatch = [];
   var oMatch = {};
   var date = Date.now();
-  var opponent = User.findById(req.params.opponent);
   var uid = req.user.id;
   var oid = req.params.opponent;
   var uw = req.body.userWins;
   var ow = req.body.opponentWins;
-  var createUserObject = function( user ){
-    user.profile.
-  }
-
   if (uid === oid) return; // if user is playing against himself, that's not fair
 
+  /* - - - - - - - - - - - - - - - - - - - - - - - *\
 
+    Objective: Save information into multiple user's
+    profiles -- in this case the game scores
+
+  /* - - - - - - - - - - - - - - - - - - - - - - - */
+
+
+
+  // save model into JSON
+  var user = JSON.stringify(req.user.profile);
+  user.email = JSON.stringify(req.user.email);
+
+
+
+  // Q-1 : How to transform mongoose 'query' into model
+
+  // attempt 1
+  /* - - - - - - - - - - - - - - - - - - - - - - - 
+    var opponent = {}
+    User.findById(req.params.opponent, function(err, user) {
+      if (err) return next(err);
+      opponent.email = req.body.email || '';
+      opponent.name = req.body.name || '';
+      opponent.gender = req.body.gender || '';
+      user.profile.location = req.body.location || '';
+      user.profile.website = req.body.website || '';
+
+      user.save(function(err) {
+        if (err) return next(err);
+        req.flash('success', { msg: 'Profile information updated.' });
+        res.redirect('/account');
+      });
+    });
+  */
+
+
+
+  // attempt 2 -- slightly working, but doesn't persist to opponent variable
+  /*- - - - - - - - - - - - - - - - - - - - - - - 
+    var opponent = {}; 
+    User.findOne({_id: req.params.opponent}).lean().exec(function(err, doc) {
+        opponent = JSON.stringify(doc.profile);
+    });
+  */
+
+
+
+  // attempt 3 -- tried maybe using something different, still didn't work
+  // problem seems to be in making data persist outside of function
+  /* - - - - - - - - - - - - - - - - - - - - - - - 
+    var opponent = {};
+    db.users.find(req.params.opponent, function(err, doc) {
+      opponent = JSON.stringify(doc.profile)
+    });
+  */
+
+
+  // Create objects to be saved to player's "matches" array
+  /* - - - - - - - - - - - - - - - - - - - - - - - */
   uMatch = [date, uw, ow, opponent];
-  oMatch = [date, ow, uw, req.user];
+  oMatch = [date, ow, uw, user];
 
+  
+
+  // Create a standard way of reporting matches in a different collection
+  /* - - - - - - - - - - - - - - - - - - - - - - - */
   if (uw > ow){
-    var winner      = req.user
+    var winner      = user
       , winnerScore = uw
       , winnerLoss  = ow
       , loser       = opponent
@@ -51,21 +111,10 @@ exports.recordScore = function(req, res, next) {
   match["score"]    = [winnerScore, loserScore];
   match["players"]  = [winner, loser]; 
 
-  User.findById(req.user.id, function(err, user) {
-    if (err) return next(err);
-    user.profile.name = 'Normal Name';
-    user.matches.push({ date: match });
 
-    user.save(function(err) {
-      if (err) return next(err);
-      req.flash('success', { msg: 'Profile information updated.' });
-      res.redirect('/');
-    });
+  // Q-2 : Save to a "matches" collection
+  /* - - - - - - - - - - - - - - - - - - - - - - - */
 
-  });
-    // save to a "matches" collection
-
-    // ?? if possible can I just have it do nothing?
 
 };
 
