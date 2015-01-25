@@ -1,7 +1,4 @@
 //- hackathon overrides here
-html,body{
-	-webkit-font-smoothing: antialiased;
-}
 
 .content{
 	width: 100%;
@@ -19,6 +16,10 @@ html,body{
 .btn:hover{
 	background-color: $jMintDarker;
 	color: white;
+}
+
+.navbar-brand {
+	transition: none;
 }
 
 

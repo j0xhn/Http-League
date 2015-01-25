@@ -1,13 +1,4 @@
 
-	//	------------------------------------
-	//	#Animation
-	//	------------------------------------
-
-	@-webkit-keyframes banner-loop { 0% { transform: translateY(0); } 100% { transform: translateY(-700px); } }
-	@-moz-keyframes banner-loop { 0% { transform: translateY(0); } 100% { transform: translateY(-700px); } }
-	@-o-keyframes banner-loop { 0% { transform: translateY(0); } 100% { transform: translateY(-700px); } }
-	@keyframes banner-loop { 0% { transform: translateY(0); } 100% { transform: translateY(-700px); } }
-
 .app-page {
 	body{
 		padding: 0; //removes top padding that made page start after header
@@ -121,8 +112,8 @@
 			bottom: -$item-height + 3 ;
 			margin-left: auto;
 			margin-right: auto;
-			-webkit-transition: 300ms ease all;
-			transition: 300ms ease all;
+			-webkit-transition: 300ms ease;
+			transition: 300ms ease;
 			z-index: 2;
 			p{
 				line-height: 20px;
@@ -147,7 +138,6 @@
 				color: $gray;
 				border: none;
 				outline: none;
-				border-radius: 3px;
 				opacity: .8;
 				&:focus{
 					opacity: 1;

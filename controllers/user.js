@@ -8,6 +8,9 @@ var secrets = require('../config/secrets');
 var mongoose = require('mongoose');
 var db = mongoose.connection
 
+var handleError = function(err){
+  console.log(err);
+}
 /**
  * POST /app/recordScore/:opponent
  * Record score
@@ -22,99 +25,53 @@ exports.recordScore = function(req, res, next) {
   var oid = req.params.opponent;
   var uw = req.body.userWins;
   var ow = req.body.opponentWins;
+
   if (uid === oid) return; // if user is playing against himself, that's not fair
 
-  /* - - - - - - - - - - - - - - - - - - - - - - - *\
-
-    Objective: Save information into multiple user's
-    profiles -- in this case the game scores
-
-  /* - - - - - - - - - - - - - - - - - - - - - - - */
-
-
-
+  // Create objects to be saved to player's "matches" array
+  uMatch = [date, uw, ow];
+  oMatch = [date, ow, uw];
+ 
   // save model into JSON
   var user = JSON.stringify(req.user.profile);
   user.email = JSON.stringify(req.user.email);
 
+  // save info into opponent's profile
+  User.findByIdAndUpdate({_id: oid}, { $set: { 'profile.score' : '5'}}, function (err, user) {
+  if (err) return handleError(err);
+  });
 
-
-  // Q-1 : How to transform mongoose 'query' into model
-
-  // attempt 1
-  /* - - - - - - - - - - - - - - - - - - - - - - - 
-    var opponent = {}
-    User.findById(req.params.opponent, function(err, user) {
-      if (err) return next(err);
-      opponent.email = req.body.email || '';
-      opponent.name = req.body.name || '';
-      opponent.gender = req.body.gender || '';
-      user.profile.location = req.body.location || '';
-      user.profile.website = req.body.website || '';
-
-      user.save(function(err) {
-        if (err) return next(err);
-        req.flash('success', { msg: 'Profile information updated.' });
-        res.redirect('/account');
-      });
-    });
-  */
-
-
-
-  // attempt 2 -- slightly working, but doesn't persist to opponent variable
-  /*- - - - - - - - - - - - - - - - - - - - - - - 
-    var opponent = {}; 
-    User.findOne({_id: req.params.opponent}).lean().exec(function(err, doc) {
-        opponent = JSON.stringify(doc.profile);
-    });
-  */
-
-
-
-  // attempt 3 -- tried maybe using something different, still didn't work
-  // problem seems to be in making data persist outside of function
-  /* - - - - - - - - - - - - - - - - - - - - - - - 
-    var opponent = {};
-    db.users.find(req.params.opponent, function(err, doc) {
-      opponent = JSON.stringify(doc.profile)
-    });
-  */
-
-
-  // Create objects to be saved to player's "matches" array
-  /* - - - - - - - - - - - - - - - - - - - - - - - */
-  uMatch = [date, uw, ow, opponent];
-  oMatch = [date, ow, uw, user];
-
-  
+  // save info into user's profile
+  User.findByIdAndUpdate({_id: uid}, { $set: { 'profile.score' : '5'}}, function (err, user) {
+  if (err) return handleError(err);
+  });
 
   // Create a standard way of reporting matches in a different collection
   /* - - - - - - - - - - - - - - - - - - - - - - - */
-  if (uw > ow){
-    var winner      = user
-      , winnerScore = uw
-      , winnerLoss  = ow
-      , loser       = opponent
-      , loserScore  = ow
-      , loserLoss   = uw;
-  } else {
-    var winner      = opponent
-      , winnerScore = ow
-      , winnerLoss  = uw
-      , loser       = req.user
-      , loserScore  = uw
-      , loserLoss   = ow;
-  }
+  // if (uw > ow){
+  //   var winner      = user
+  //     , winnerScore = uw
+  //     , winnerLoss  = ow
+  //     , loser       = opponent
+  //     , loserScore  = ow
+  //     , loserLoss   = uw;
+  // } else {
+  //   var winner      = opponent
+  //     , winnerScore = ow
+  //     , winnerLoss  = uw
+  //     , loser       = req.user
+  //     , loserScore  = uw
+  //     , loserLoss   = ow;
+  // }
 
-  match["date"]     = date;
-  match["score"]    = [winnerScore, loserScore];
-  match["players"]  = [winner, loser]; 
+  // match["date"]     = date;
+  // match["score"]    = [winnerScore, loserScore];
+  // match["players"]  = [winner, loser]; 
 
 
   // Q-2 : Save to a "matches" collection
   /* - - - - - - - - - - - - - - - - - - - - - - - */
-
+  res.redirect('/');
 
 };
 
