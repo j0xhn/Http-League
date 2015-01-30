@@ -7,6 +7,7 @@ var User = require('../models/User');
 var secrets = require('../config/secrets');
 var mongoose = require('mongoose');
 var db = mongoose.connection
+var forEachAsync = require('foreachasync').forEachAsync;
 
 var handleError = function(err){
   console.log(err);
@@ -23,55 +24,60 @@ exports.recordScore = function(req, res, next) {
   var date = Date.now();
   var uid = req.user.id;
   var oid = req.params.opponent;
-  var uw = req.body.userWins;
-  var ow = req.body.opponentWins;
+  var uw = parseInt(req.body.userWins, 10);
+  var ow = parseInt(req.body.opponentWins, 10);
 
   if (uid === oid) return; // if user is playing against himself, that's not fair
 
-  // Create objects to be saved to player's "matches" array
-  uMatch = [date, uw, ow];
-  oMatch = [date, ow, uw];
- 
   // save model into JSON
-  var user = JSON.stringify(req.user.profile);
-  user.email = JSON.stringify(req.user.email);
 
-  // save info into opponent's profile
-  User.findByIdAndUpdate({_id: oid}, { $set: { 'profile.score' : '5'}}, function (err, user) {
-  if (err) return handleError(err);
+  // ATTEMPT 2
+  var opponent = User.findOne({ _id: oid }, function(err, opponent) {
+    if (err) return next(err);
+
+    // sets to Objects
+    var userObject = req.user;
+    var opponentObject = opponent;
+
+    if (uw > ow){
+      var winner    = userObject._id
+      , winnerScore = uw
+      , winnerLoss  = ow
+      , loser       = opponent._id
+      , loserScore  = ow
+      , loserLoss   = uw;
+    } else {
+      var winner    = opponentObject._id
+      , winnerScore = ow
+      , winnerLoss  = uw
+      , loser       = userObject._id
+      , loserScore  = uw
+      , loserLoss   = ow;
+    }
+
+    match.date        = date;
+    match.winnerScore = winnerScore;
+    match.loserScore  = loserScore;
+    match.winnerId    = winner;
+    match.loserId     = loser;
+
+    [userObject, opponentObject].forEach(function(user){
+      if (!user.matches){
+        user.matches = [];
+      } 
+      user.matches.push(match);
+    })
+
+    forEachAsync([userObject, opponentObject], function(user){
+      return User.findByIdAndUpdate({_id: user.id || user._id }, { $set: { 'matches' : user.matches }}).exec();
+    }).then(function(){
+      res.send({ success : true })
+    }).catch(function(err){
+        handleError(err);
+        res.send({ error: { message: err.message || err.toString() }})
+    })
+
   });
-
-  // save info into user's profile
-  User.findByIdAndUpdate({_id: uid}, { $set: { 'profile.score' : '5'}}, function (err, user) {
-  if (err) return handleError(err);
-  });
-
-  // Create a standard way of reporting matches in a different collection
-  /* - - - - - - - - - - - - - - - - - - - - - - - */
-  // if (uw > ow){
-  //   var winner      = user
-  //     , winnerScore = uw
-  //     , winnerLoss  = ow
-  //     , loser       = opponent
-  //     , loserScore  = ow
-  //     , loserLoss   = uw;
-  // } else {
-  //   var winner      = opponent
-  //     , winnerScore = ow
-  //     , winnerLoss  = uw
-  //     , loser       = req.user
-  //     , loserScore  = uw
-  //     , loserLoss   = ow;
-  // }
-
-  // match["date"]     = date;
-  // match["score"]    = [winnerScore, loserScore];
-  // match["players"]  = [winner, loser]; 
-
-
-  // Q-2 : Save to a "matches" collection
-  /* - - - - - - - - - - - - - - - - - - - - - - - */
-  res.redirect('/');
 
 };
 

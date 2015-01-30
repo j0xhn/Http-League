@@ -26,6 +26,7 @@
     "express-session": "^1.8.2",
     "express-validator": "^2.5.0",
     "fbgraph": "^0.2.11",
+    "foreachasync": "^5.0.5",
     "github-api": "^0.7.0",
     "instagram-node": "^0.5.1",
     "jade": "^1.7.0",

@@ -29,7 +29,8 @@ block content
 										| are an honest and true representation of
 										| a ping pong match that was played. Cross my heart  
 										| hope to die, stick a needle in my eye.
-									form(action='/app/recordScore/#{opponent._id}', method='POST')
+									form.js-record-score
+										input.js-record-score-oid(type='hidden', name='opponentId', value='#{opponent._id}')
 										input(type='hidden', name='_csrf', value=_csrf)
 										.pad20b
 											.player
@@ -52,7 +53,7 @@ block content
 						.about
 							span.ion-ios-close-empty
 							h5 Recent Matches
-								//- each match in opponent.profile.matches
-									//- p #{match[0]}
+								each match in opponent.matches
+									p #{match}
 				
 				

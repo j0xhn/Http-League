@@ -64,6 +64,14 @@ userSchema.methods.comparePassword = function(candidatePassword, cb) {
 };
 
 /**
+ * Retrieve a "user object"
+ * 
+ */
+// userSchema.virtual('profile.full').get(function () {
+//   return this.profile + ' ' + this.email;
+// });
+
+/**
  * Get URL to a user's gravatar.
  * Used in Navbar and Account Management page.
  */
