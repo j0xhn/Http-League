@@ -15,13 +15,14 @@ var userSchema = new mongoose.Schema({
   tokens: Array,
 
   profile: {
-    name: { type: String, default: '' },
-    gender: { type: String, default: '' },
+    name:     { type: String, default: '' },
+    gender:   { type: String, default: '' },
     location: { type: String, default: '' },
-    website: { type: String, default: '' },
-    picture: { type: String, default: '' },
-    company: { type: String, default: '' },
-    score:    { type: Number, default: 0},
+    website:  { type: String, default: '' },
+    picture:  { type: String, default: '' },
+    company:  { type: String, default: '' },
+    score:    { type: Number, default: 20 },
+    rank:     { type: Number, default: 0  }
   },
 
   matches: Array,

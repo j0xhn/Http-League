@@ -29,9 +29,6 @@ exports.recordScore = function(req, res, next) {
 
   if (uid === oid) return; // if user is playing against himself, that's not fair
 
-  // save model into JSON
-
-  // ATTEMPT 2
   var opponent = User.findOne({ _id: oid }, function(err, opponent) {
     if (err) return next(err);
 
@@ -76,6 +73,11 @@ exports.recordScore = function(req, res, next) {
         handleError(err);
         res.send({ error: { message: err.message || err.toString() }})
     })
+
+    // TODO: sets to a "matches" collection
+
+    // TODO: swaps "rank" if the loser beat the winner
+
 
   });
 

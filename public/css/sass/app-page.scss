@@ -168,12 +168,12 @@
 			position: relative;
 			width: 100%;
 			height: $item-height;
-			padding: 40px 30px 0px;
+			padding: 20px;
 			z-index: 2;
 			@include transition-duration(300ms);
 			@include transition-property(transform);
 			@include transition-timing-function(ease);
-			svg {
+			span {
 				opacity: .8;
 				position: absolute;
 				width: 20px;
@@ -190,6 +190,7 @@
 				font-size: 12px;
 				margin-bottom: 10px;
 				color: $gray;
+				text-align: center;
 			}
 			p {
 				color: #FFF;

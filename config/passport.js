@@ -23,6 +23,8 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
+// TODO: Query to see how many users there are, assign that to a variable, then in each of the following ways to sign up they should put that number as their rank.
+
 // Sign in with Instagram.
 
 passport.use(new InstagramStrategy(secrets.instagram,function(req, accessToken, refreshToken, profile, done) {
