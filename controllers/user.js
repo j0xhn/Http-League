@@ -18,45 +18,60 @@ var handleError = function(err){
  */
 
 exports.recordScore = function(req, res, next) {
-  var match = {};
-  var uMatch = [];
-  var oMatch = {};
-  var date = Date.now();
-  var uid = req.user.id;
-  var oid = req.params.opponent;
-  var uw = parseInt(req.body.userWins, 10);
-  var ow = parseInt(req.body.opponentWins, 10);
 
-  if (uid === oid) return; // if user is playing against himself, that's not fair
+  if (req.user.id === opponent ) return; // if user is playing against himself, that's not fair
+  
+  var match = {
+    date    : '',
+    winner  : {},
+    loser   : {}
+  };
 
-  var opponent = User.findOne({ _id: oid }, function(err, opponent) {
+
+
+
+  var opponent = User.findOne({ _id: req.params.opponent }, function(err, opponent) {
     if (err) return next(err);
 
-    // sets to Objects
-    var userObject = req.user;
-    var opponentObject = opponent;
 
-    if (uw > ow){
-      var winner    = userObject._id
-      , winnerScore = uw
-      , winnerLoss  = ow
-      , loser       = opponent._id
-      , loserScore  = ow
-      , loserLoss   = uw;
-    } else {
-      var winner    = opponentObject._id
-      , winnerScore = ow
-      , winnerLoss  = uw
-      , loser       = userObject._id
-      , loserScore  = uw
-      , loserLoss   = ow;
+    // sets Player Objects
+    var userObject      = req.user;
+    userObject.wins = parseInt(req.body.userWins, 10);
+    debugger;
+    var opponentObject = opponent;
+    opponentObject.wins = parseInt(req.body.opponentWins, 10);
+
+
+
+    var createMatchSnapshot = function(winnerParam, loserParam){
+
+      match.date        = Date.now();
+
+      match.winner.id     = winnerParam._id,
+      match.winner.wins   = winnerParam.wins,
+      match.winner.losses = loserParam.wins,
+      match.winner.email  = winnerParam.email,
+      match.winner.name   = winnerParam.profile.name,
+      match.winner.score  = winnerParam.score,
+
+      match.loser.id     = loserParam._id,
+      match.loser.wins   = loserParam.wins,
+      match.loser.losses = winnerParam.wins,
+      match.loser.img    = loserParam.profile.picture,
+      match.loser.name   = loserParam.profile.name,
+      match.loser.score  = loserParam.score;
+
     }
 
-    match.date        = date;
-    match.winnerScore = winnerScore;
-    match.loserScore  = loserScore;
-    match.winnerId    = winner;
-    match.loserId     = loser;
+
+
+    if ( userObject.wins > opponentObject.wins){
+      createMatchSnapshot ( userObject , opponentObject );
+    } else {
+      createMatchSnapshot ( opponentObject , userObject );
+    }
+
+
 
     [userObject, opponentObject].forEach(function(user){
       if (!user.matches){

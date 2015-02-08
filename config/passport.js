@@ -12,6 +12,7 @@ var OAuthStrategy = require('passport-oauth').OAuthStrategy; // Tumblr
 var OAuth2Strategy = require('passport-oauth').OAuth2Strategy; // Venmo, Foursquare
 var User = require('../models/User');
 var secrets = require('./secrets');
+var mongoose = require('mongoose');
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);
@@ -24,7 +25,10 @@ passport.deserializeUser(function(id, done) {
 });
 
 // TODO: Query to see how many users there are, assign that to a variable, then in each of the following ways to sign up they should put that number as their rank.
-
+var createRank = function(){
+  var rank = db.users.count();
+  return rank;
+}
 // Sign in with Instagram.
 
 passport.use(new InstagramStrategy(secrets.instagram,function(req, accessToken, refreshToken, profile, done) {
