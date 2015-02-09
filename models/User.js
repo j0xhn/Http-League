@@ -21,7 +21,7 @@ var userSchema = new mongoose.Schema({
     website:  { type: String, default: '' },
     picture:  { type: String, default: '' },
     company:  { type: String, default: '' },
-    score:    { type: Number, default: 20 },
+    score:    { type: Number, default: 50 },
     rank:     { type: Number, default: 0  }
   },
 

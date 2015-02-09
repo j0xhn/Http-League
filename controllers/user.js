@@ -37,7 +37,7 @@ exports.recordScore = function(req, res, next) {
     // sets Player Objects
     var userObject      = req.user;
     userObject.wins = parseInt(req.body.userWins, 10);
-    debugger;
+
     var opponentObject = opponent;
     opponentObject.wins = parseInt(req.body.opponentWins, 10);
 
@@ -61,6 +61,40 @@ exports.recordScore = function(req, res, next) {
       match.loser.name   = loserParam.profile.name,
       match.loser.score  = loserParam.score;
 
+
+      // TODO: swaps "rank" if the loser beat the winner
+      if ( loserParam.rank > winnerParam.rank ){
+        rankSwap(match, winnerParam, loserParam);
+      }
+
+    }
+
+
+
+    var rankSwap = function performRankSwap (matchParam, winnerParam, loserParam) {
+      var points = matchParam.winner.wins - match.loser.wins;
+
+      if(winnerParam.rank > loserParam.rank){
+        // swap the ranks
+        var winnerRank = winnerParam.rank;
+        var loserRank = loserParam.rank;
+
+        User.findByIdAndUpdate({_id: winnerParam.id}, { $set: { 'profile.rank' : loserRank }}).exec();
+        User.findByIdAndUpdate({_id: loserParam.id}, { $set: { 'profile.rank' : winnerRank }}).exec();
+
+        // award the points to winner
+        // User.findByIdAndUpdate...
+        // User.findByIdAndUpdate...
+
+        // ??? I want to just be able to pull down the object once... 
+        // play with the values all I want in different places, 
+        // then at the end of the function just save them.  
+        // is that possible?
+
+      } else {
+        // award points to winner
+
+      }
     }
 
 
@@ -90,8 +124,6 @@ exports.recordScore = function(req, res, next) {
     })
 
     // TODO: sets to a "matches" collection
-
-    // TODO: swaps "rank" if the loser beat the winner
 
 
   });

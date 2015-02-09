@@ -25,9 +25,14 @@ passport.deserializeUser(function(id, done) {
 });
 
 // TODO: Query to see how many users there are, assign that to a variable, then in each of the following ways to sign up they should put that number as their rank.
-var createRank = function(){
-  var rank = db.users.count();
-  return rank;
+var generateRank = function(){
+  User.count().exec(function (err, totalUserCount) {
+    if (err) return handleError(err);
+    var rank = totalUserCount;
+    debugger;
+    return rank;
+  });
+  
 }
 // Sign in with Instagram.
 
@@ -132,6 +137,7 @@ passport.use(new FacebookStrategy(secrets.facebook, function(req, accessToken, r
           req.flash('errors', { msg: 'There is already an account using this email address. Sign in to that account and link it with Facebook manually from Account Settings.' });
           done(err);
         } else {
+          if (err) return handleError(err);
           var user = new User();
           user.email = profile._json.email;
           user.facebook = profile.id;
@@ -140,10 +146,39 @@ passport.use(new FacebookStrategy(secrets.facebook, function(req, accessToken, r
           user.profile.gender = profile._json.gender;
           user.profile.picture = 'https://graph.facebook.com/' + profile.id + '/picture?type=large';
           user.profile.location = (profile._json.location) ? profile._json.location.name : '';
+
+          // attempt 1
+          // user.profile.rank = generateRank().then(function() { 
+          //   user.save(function(err) {
+          //     debugger;
+          //     done(err, user);
+          //   });
+          // })
+
+          // attempt 2
+          // user.profile.rank = generateRank().then(function(docs){
+          //   debugger;
+          //   user.save(function(err) {
+          //     done(err, user);
+          //   });
+          // });
+          
+          // attempt 3 - gives me error "ValidationError: Cast to number failed for value "[object Object]" at path "profile.rank""
+          // user.profile.rank = User.count().exec(function (err, totalUserCount) {
+          //   if (err) return handleError(err);
+          //   user.profile.rank = parseInt(totalUserCount,10);
+          // }).then(function(){
+          //   user.save(function(err) {
+          //     debugger;
+          //     done(err, user);
+          //   });
+          // });
+          
           user.save(function(err) {
+            debugger;
             done(err, user);
           });
-        }
+        };
       });
     });
   }
@@ -188,6 +223,7 @@ passport.use(new GitHubStrategy(secrets.github, function(req, accessToken, refre
           user.profile.picture = profile._json.avatar_url;
           user.profile.location = profile._json.location;
           user.profile.website = profile._json.blog;
+          user.profile.rank = generateRank();
           user.save(function(err) {
             done(err, user);
           });
