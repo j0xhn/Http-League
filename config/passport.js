@@ -26,12 +26,40 @@ passport.deserializeUser(function(id, done) {
 
 // TODO: Query to see how many users there are, assign that to a variable, then in each of the following ways to sign up they should put that number as their rank.
 var generateRank = function(){
-  User.count().exec(function (err, totalUserCount) {
-    if (err) return handleError(err);
-    var rank = totalUserCount;
-    debugger;
-    return rank;
-  });
+
+  // attempt 1-3
+  // User.count().exec(function (err, totalUserCount) {
+  //   if (err) return handleError(err);
+  //   var rank = totalUserCount;
+  //   debugger;
+  //   return rank;
+  // });
+
+  // attempt 4
+  // User.count().exec().then(function(dbdata){
+  //   debugger;
+  //   return dbdata;
+  // });
+
+  // attempt 5
+  // was going to be below code, but decided to do it inline
+  // return User.count()
+
+  // explore in future
+//   var insertCountry = function() {
+//     var googledata = this;
+//     return Country.findOne({zn: googledata.country}).exec()
+//     .then(function(dbdata){ 
+//          return {dbdata: dbdata, googledata: googledata}; 
+//      })
+//     .then(function(data){
+//        return Country.findOne({}).sort({'zid' : -1}).exec()
+//           .then(function(d){
+//            var newc = new Country({zn: data.googledata.country, zid: d.zid + 1});
+//            return newc.save();
+//        })
+//     })
+// }
   
 }
 // Sign in with Instagram.
@@ -146,6 +174,7 @@ passport.use(new FacebookStrategy(secrets.facebook, function(req, accessToken, r
           user.profile.gender = profile._json.gender;
           user.profile.picture = 'https://graph.facebook.com/' + profile.id + '/picture?type=large';
           user.profile.location = (profile._json.location) ? profile._json.location.name : '';
+        
 
           // attempt 1
           // user.profile.rank = generateRank().then(function() { 
@@ -173,11 +202,26 @@ passport.use(new FacebookStrategy(secrets.facebook, function(req, accessToken, r
           //     done(err, user);
           //   });
           // });
-          
-          user.save(function(err) {
-            debugger;
-            done(err, user);
+
+          // attempt 4 (see above in generateRank function)
+          // user.profile.rank = generateRank().then(function(dbdata){
+          //   debugger
+          //   user.profile.rank = dbdata;
+          //   user.save(function(err) {
+          //     debugger;
+          //     done(err, user);
+          //   });
+          // });
+
+          // attempt 5
+          User.count().exec().then(function(dbdata){
+            user.profile.rank = dbdata;
+            user.save(function(err) {
+              done(err, user);
+            })
           });
+          
+          
         };
       });
     });
