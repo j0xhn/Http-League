@@ -18,7 +18,7 @@ var handleError = function(err){
  */
 
 exports.recordScore = function(req, res, next) {
-
+debugger;
   if (req.user.id === opponent ) return; // if user is playing against himself, that's not fair
   
   var match = {
@@ -27,16 +27,11 @@ exports.recordScore = function(req, res, next) {
     loser   : {}
   };
 
-
-
-
   var opponent = User.findOne({ _id: req.params.opponent }, function(err, opponent) {
     if (err) return next(err);
 
-
-
     var createMatchSnapshot = function(winnerParam, loserParam){
-
+      debugger;
       match.date        = Date.now();
 
       match.winner.id     = winnerParam._id,
@@ -55,26 +50,35 @@ exports.recordScore = function(req, res, next) {
 
     }
 
+    var assignPointsAndRankAndSave = function(matchParam, winnerParam, loserParam) {
+      debugger;
+      var matchPoints = matchParam.winner.wins - match.loser.wins;
 
-
-    var swapRank = function performRankSwap (matchParam, winnerParam, loserParam) {
-      var points = matchParam.winner.wins - match.loser.wins;
-
-      if(winnerParam.rank < loserParam.rank){
+      if(winnerParam.rank > loserParam.rank){
+        var rankPoints = loserParam.rank - winnerParam.rank;
         // swap the ranks
         var winnerRank = winnerParam.rank;
         var loserRank = loserParam.rank;
-
         winnerParam.profile.rank = loserRank;
         loserParam.profile.rank = loserRank;
 
-        winnerParam.profile.score += points; 
-
       } else {
-        
-        loserParam.profile.score += points;
-
+        var rankPoints = winnerParam.rank - loserParam.rank;
       }
+      // assign points to winner
+      var totalPoints = rankPoints + rankPoints;
+      winnerParam.profile.score += totalPoints;
+      loserParam.profile.score -+ totalPoints;
+      var playerArray = [winnerParam, loserParam];
+      
+      forEachAsync(playerArray, function(user){
+        return User.findByIdAndUpdate({_id: user.id || user._id }, { $set: { 'matches' : user.matches }}).exec();
+      }).then(function(){
+        res.send({ success : true })
+      }).catch(function(err){
+        handleError(err);
+        res.send({ error: { message: err.message || err.toString() }})
+      })
     }
 
 
@@ -99,9 +103,6 @@ exports.recordScore = function(req, res, next) {
     }
 
     createMatchSnapshot(winnerObject, loserObject);
-    swapRank(match, winnerObject, loserObject);
-
-
 
     [winnerObject, loserObject].forEach(function(user){
       if (!user.matches){
@@ -110,15 +111,7 @@ exports.recordScore = function(req, res, next) {
       user.matches.push(match);
     })
 
-    forEachAsync([winnerObject, loserObject], function(user){
-      return User.findByIdAndUpdate({_id: user.id || user._id }, { $set: { 'matches' : user.matches }}).exec();
-    }).then(function(){
-      res.send({ success : true })
-    }).catch(function(err){
-        handleError(err);
-        res.send({ error: { message: err.message || err.toString() }})
-    })
-
+    assignPointsAndRankAndSave(match, winnerObject, loserObject)
     // TODO: sets to a "matches" collection
 
 
