@@ -34,14 +34,6 @@ exports.recordScore = function(req, res, next) {
     if (err) return next(err);
 
 
-    // sets Player Objects
-    var userObject      = req.user;
-    userObject.wins = parseInt(req.body.userWins, 10);
-
-    var opponentObject = opponent;
-    opponentObject.wins = parseInt(req.body.opponentWins, 10);
-
-
 
     var createMatchSnapshot = function(winnerParam, loserParam){
 
@@ -61,60 +53,64 @@ exports.recordScore = function(req, res, next) {
       match.loser.name   = loserParam.profile.name,
       match.loser.score  = loserParam.score;
 
-
-      // TODO: swaps "rank" if the loser beat the winner
-      if ( loserParam.rank > winnerParam.rank ){
-        rankSwap(match, winnerParam, loserParam);
-      }
-
     }
 
 
 
-    var rankSwap = function performRankSwap (matchParam, winnerParam, loserParam) {
+    var swapRank = function performRankSwap (matchParam, winnerParam, loserParam) {
       var points = matchParam.winner.wins - match.loser.wins;
 
-      if(winnerParam.rank > loserParam.rank){
+      if(winnerParam.rank < loserParam.rank){
         // swap the ranks
         var winnerRank = winnerParam.rank;
         var loserRank = loserParam.rank;
 
-        User.findByIdAndUpdate({_id: winnerParam.id}, { $set: { 'profile.rank' : loserRank }}).exec();
-        User.findByIdAndUpdate({_id: loserParam.id}, { $set: { 'profile.rank' : winnerRank }}).exec();
+        winnerParam.profile.rank = loserRank;
+        loserParam.profile.rank = loserRank;
 
-        // award the points to winner
-        // User.findByIdAndUpdate...
-        // User.findByIdAndUpdate...
-
-        // ??? I want to just be able to pull down the object once... 
-        // play with the values all I want in different places, 
-        // then at the end of the function just save them.  
-        // is that possible?
+        winnerParam.profile.score += points; 
 
       } else {
-        // award points to winner
+        
+        loserParam.profile.score += points;
 
       }
     }
 
 
 
-    if ( userObject.wins > opponentObject.wins){
-      createMatchSnapshot ( userObject , opponentObject );
+    // sets Player Objects and Winner Loser Objects
+    var userObject      = req.user;
+    userObject.wins = parseInt(req.body.userWins, 10);
+
+    var opponentObject = opponent;
+    opponentObject.wins = parseInt(req.body.opponentWins, 10);
+
+
+
+
+    // logic for finding winner
+    if (userObject.wins > opponentObject.wins){
+      var winnerObject  = userObject;
+      var loserObject   = opponentObject;
     } else {
-      createMatchSnapshot ( opponentObject , userObject );
+      var winnerObject  = opponentObject;
+      var loserObject   = userObject;
     }
 
+    createMatchSnapshot(winnerObject, loserObject);
+    swapRank(match, winnerObject, loserObject);
 
 
-    [userObject, opponentObject].forEach(function(user){
+
+    [winnerObject, loserObject].forEach(function(user){
       if (!user.matches){
         user.matches = [];
       } 
       user.matches.push(match);
     })
 
-    forEachAsync([userObject, opponentObject], function(user){
+    forEachAsync([winnerObject, loserObject], function(user){
       return User.findByIdAndUpdate({_id: user.id || user._id }, { $set: { 'matches' : user.matches }}).exec();
     }).then(function(){
       res.send({ success : true })
