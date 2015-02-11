@@ -53,11 +53,10 @@ block content
 						.about
 							span.ion-ios-close-empty
 							h5 Current Rank : #{opponent.profile.rank}
-							h5 Recent Matches
 								each match in opponent.matches
-									h5 Nov 5th, 2014
-									p #3 John D. Storey [226 points] - 7
-									p #7 Some Otherguy [200 points] - 2
+									h5 #{match.dateString}
+									p #{match.winner.rank} #{match.winner.name} #{match.winner.score} - #{match.winner.wins}
+									p #{match.loser.rank} #{match.loser.name} #{match.loser.score} - #{match.loser.wins}
 									
 				
 				

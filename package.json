@@ -7,7 +7,7 @@
   },
   "scripts": {
     "start": "nodemon app.js",
-    "start debug": "nodemon --debug app.js",
+    "start debug": "node-inspector && nodemon --debug app.js",
     "test": "mocha"
   },
   "dependencies": {

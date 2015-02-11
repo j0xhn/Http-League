@@ -18,7 +18,6 @@ var handleError = function(err){
  */
 
 exports.recordScore = function(req, res, next) {
-debugger;
   if (req.user.id === opponent ) return; // if user is playing against himself, that's not fair
   
   var match = {
@@ -31,46 +30,80 @@ debugger;
     if (err) return next(err);
 
     var createMatchSnapshot = function(winnerParam, loserParam){
-      debugger;
-      match.date        = Date.now();
+      match.date          = new Date();
+      var day = match.date.getDate();
+      var month = new Array();
+      month[0] = "Jan";
+      month[1] = "Feb";
+      month[2] = "March";
+      month[3] = "April";
+      month[4] = "May";
+      month[5] = "June";
+      month[6] = "July";
+      month[7] = "Aug";
+      month[8] = "Sept";
+      month[9] = "Oct";
+      month[10] = "Nov";
+      month[11] = "Dec";
+      var n = month[match.date.getMonth()];
+      var year = match.date.getFullYear();
+
+      match.dateString    = n + ' ' + day + ' ' + year;
 
       match.winner.id     = winnerParam._id,
       match.winner.wins   = winnerParam.wins,
       match.winner.losses = loserParam.wins,
       match.winner.email  = winnerParam.email,
+      match.loser.img     = winnerParam.profile.picture,
       match.winner.name   = winnerParam.profile.name,
-      match.winner.score  = winnerParam.score,
+      match.winner.score  = winnerParam.profile.score,
+      match.winner.rank   = winnerParam.profile.rank,
 
       match.loser.id     = loserParam._id,
       match.loser.wins   = loserParam.wins,
       match.loser.losses = winnerParam.wins,
+      match.loser.email  = loserParam.email,
       match.loser.img    = loserParam.profile.picture,
       match.loser.name   = loserParam.profile.name,
-      match.loser.score  = loserParam.score;
+      match.loser.score  = loserParam.profile.score,
+      match.loser.rank   = loserParam.profile.rank;
 
-    }
+    };
 
     var assignPointsAndRankAndSave = function(matchParam, winnerParam, loserParam) {
-      debugger;
       var matchPoints = matchParam.winner.wins - match.loser.wins;
 
       if(winnerParam.rank > loserParam.rank){
-        var rankPoints = loserParam.rank - winnerParam.rank;
+        var rankPoints = winnerParam.profile.rank - loserParam.profile.rank;
         // swap the ranks
-        var winnerRank = winnerParam.rank;
-        var loserRank = loserParam.rank;
+        var winnerRank = winnerParam.profile.rank;
+        var loserRank = loserParam.profile.rank;
         winnerParam.profile.rank = loserRank;
         loserParam.profile.rank = loserRank;
 
       } else {
-        var rankPoints = winnerParam.rank - loserParam.rank;
+        var rankPoints = loserParam.profile.rank - winnerParam.profile.rank;
       }
+      debugger;
       // assign points to winner
-      var totalPoints = rankPoints + rankPoints;
+      var totalPoints = rankPoints + matchPoints;
       winnerParam.profile.score += totalPoints;
       loserParam.profile.score -+ totalPoints;
       var playerArray = [winnerParam, loserParam];
-      
+
+      [winnerObject, loserObject].forEach(function(user){
+        if (!user.matches){
+          user.matches = [];
+        } 
+        user.matches.push(match);
+        user.save(function(err) {
+          if (err) return next(err);
+        });
+      }).then(function() {
+        debugger;
+        res.send({ success : true })
+      })
+
       forEachAsync(playerArray, function(user){
         return User.findByIdAndUpdate({_id: user.id || user._id }, { $set: { 'matches' : user.matches }}).exec();
       }).then(function(){
@@ -79,6 +112,15 @@ debugger;
         handleError(err);
         res.send({ error: { message: err.message || err.toString() }})
       })
+
+      // forEachAsync(playerArray, function(user){
+      //   return User.findByIdAndUpdate({_id: user.id || user._id }, { $set: { 'matches' : user.matches }}).exec();
+      // }).then(function(){
+      //   res.send({ success : true })
+      // }).catch(function(err){
+      //   handleError(err);
+      //   res.send({ error: { message: err.message || err.toString() }})
+      // })
     }
 
 
@@ -103,13 +145,6 @@ debugger;
     }
 
     createMatchSnapshot(winnerObject, loserObject);
-
-    [winnerObject, loserObject].forEach(function(user){
-      if (!user.matches){
-        user.matches = [];
-      } 
-      user.matches.push(match);
-    })
 
     assignPointsAndRankAndSave(match, winnerObject, loserObject)
     // TODO: sets to a "matches" collection
