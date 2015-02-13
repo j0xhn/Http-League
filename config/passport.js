@@ -149,7 +149,7 @@ passport.use(new FacebookStrategy(secrets.facebook, function(req, accessToken, r
           user.tokens.push({ kind: 'facebook', accessToken: accessToken });
           user.profile.name = user.profile.name || profile.displayName;
           user.profile.gender = user.profile.gender || profile._json.gender;
-          user.profile.picture = user.profile.picture || 'https://graph.facebook.com/' + profile.id + '/picture?type=large';
+          user.profile.picture = user.profile.picture || 'https://graph.facebook.com/' + profile.id + '/picture?width=150&height=150';
           user.save(function(err) {
             req.flash('info', { msg: 'Facebook account has been linked.' });
             done(err, user);

@@ -18,7 +18,6 @@ var handleError = function(err){
  */
 
 exports.recordScore = function(req, res, next) {
-  debugger;
   // if user is playing against himself, that's not fair
   if (req.user.id === req.params.opponentId ){
     res.send({error: {message:'players are the same'}});
@@ -33,7 +32,6 @@ exports.recordScore = function(req, res, next) {
 
   User.findOne({ _id: req.params.opponentId }, function(err, opponent) {
     if (err) return next(err);
-    debugger;
     var createMatchSnapshot = function(winnerParam, loserParam){
       match.date          = new Date();
       var day = match.date.getDate();
@@ -84,12 +82,9 @@ exports.recordScore = function(req, res, next) {
       // inverse to account for 1 is great, 5 is bad
       if(winnerParam.profile.rank > loserParam.profile.rank){ 
         // swap the ranks
-        debugger;
-        swapRank = winnerParam.profile.rank;
         winnerParam.profile.rank = loserParam.profile.rank;
         loserParam.profile.rank = swapRank;
       } 
-      debugger;
       rankPoints = winnerParam.profile.rank - loserParam.profile.rank;
       totalPoints = rankPoints + matchPoints;
 

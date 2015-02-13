@@ -15,9 +15,10 @@ block content
 				each opponent in users
 					.item
 						.person
-							p.score-space #{opponent.profile.score}
+							p.rank-space #{opponent.profile.rank}
 							img(src = opponent.profile.picture)
 							p.name #{opponent.profile.name}
+							p.score-space #{opponent.profile.score}
 							h5 #{opponent.profile.company}
 						.record-score
 							p.f16.pad10b 

@@ -58,6 +58,22 @@
 			height: $item-height;
 			position: relative;
 			text-align: center;
+			.rank-space{
+				position: absolute;
+				left: 0;
+				right: 0;
+				font-size: 13px;
+				line-height: 20px;
+				top: 18px;
+				margin-left: auto;
+				margin-right: auto;
+				color: $jMintDarker;
+				z-index: 0;
+				background-color: $grayLighter;
+				width: 40px;
+				height: 40px;
+				border-radius: 50%;
+			}
 			.score-space{
 				border-radius: 6px;
 				color: $jPink;
@@ -69,7 +85,7 @@
 				margin-left: auto;
 				margin-right: auto;
 				padding-bottom: 3px; //offsets weird line height problem
-				max-width: 60px;
+				max-width: 70px;
 				z-index: 1;
 			}
 			.name{
