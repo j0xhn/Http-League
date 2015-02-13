@@ -9,11 +9,11 @@ $(document).ready(function() {
 	console.log(form);
 
 	$.ajax( {
-	  url: '/app/recordScore/' + $('.js-record-score-oid').val()
+	  url: '/app/recordScore/' + $(this).find('.js-record-score-oid').val()
 	, data: form
 	, type: 'post'
 	});
-  })
+  });
 
 
 });
