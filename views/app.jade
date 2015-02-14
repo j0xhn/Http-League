@@ -19,7 +19,8 @@ block content
 							img(src = opponent.profile.picture)
 							p.name #{opponent.profile.name}
 							p.score-space #{opponent.profile.score}
-							h5 #{opponent.profile.company}
+							p.meta #{opponent.profile.company} <span class='txt-normal txt-gray'>&nbsp;&nbsp;|&nbsp;&nbsp;</span> #{opponent.profile.location}
+							.btn.a(href!='mailto: #{opponent.email}') challenge 
 
 						.record-score
 							span.ion-close-round.close-record-score

@@ -17,10 +17,10 @@ var userSchema = new mongoose.Schema({
   profile: {
     name:     { type: String, default: '' },
     gender:   { type: String, default: '' },
-    location: { type: String, default: '' },
+    location: { type: String, default: 'Somewhere' },
     website:  { type: String, default: '' },
     picture:  { type: String, default: '' },
-    company:  { type: String, default: '' },
+    company:  { type: String, default: 'Company LLC' },
     score:    { type: Number, default: 50 },
     rank:     { type: Number, default: 0  }
   },

@@ -90,10 +90,12 @@
 			}
 			.name{
 				cursor: pointer;
+				margin-bottom: 0;
 				&:hover{
 					color: $jMint;
 				}
 			}
+
 			img {
 				position: relative;
 				margin: 40px 0 20px 0;
@@ -110,10 +112,13 @@
 				
 			}
 
-			h5 {
+			.meta {
 				font-size: 12px;
-				margin-bottom: 50px;
+				font-style: italic;
+				color: $grayLight;
 			}
+
+			
 		}
 		.record-score {
 			color: white;

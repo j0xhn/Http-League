@@ -9,6 +9,7 @@
 	.txt-grayLight	{ color: $grayLight; p {color: $grayLight; }; hr{ color: $grayLight; background-color: $grayLight !important; } }
 	.txt-pink	{ color: $jPink; p {color: $jPink; }; hr{ color: $jPink; background-color: $jPink !important; } }
 	.txt-mint	{ color: $jMintDarker; p {color: $jMintDarker; }; hr{ color: $jMintDarker; background-color: $jMintDarker !important; } }
+	.txt-normal { font-style: initial }
 	.white   { color: $white; }					// legacy 
 	.blue    { color: $blue; }					// legacy 
 	.pink    { color: $jPink; }					// legacy 
