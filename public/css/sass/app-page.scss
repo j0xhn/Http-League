@@ -168,6 +168,7 @@
 					color: $jMint;
 				}
 			}
+			
 			&:hover{
 				background-color: $jMintDarker;
 			}
@@ -177,6 +178,8 @@
 	         	transform: translate(0,-$item-height+3) !important; 	
 				background-color: $jMintDarker;
 				padding: 20px;
+				cursor: auto;
+				.ion-close-round{ display: block; }
 			}
 		}
 		.about {
@@ -186,42 +189,53 @@
 			height: $item-height;
 			padding: 20px;
 			z-index: 2;
+			overflow: scroll;
 			@include transition-duration(300ms);
 			@include transition-property(transform);
 			@include transition-timing-function(ease);
-			span {
-				opacity: .8;
-				position: absolute;
-				width: 20px;
-				height: 20px;
-				top: 10px;
-				right: 10px;
-				z-index: 40;
-				@include transition(300ms ease transform);
-				&:hover {
-					@include rotate(90deg);
+			.match{
+				margin-bottom: 20px;
+				h5 {
+					font-size: 12px;
+					opacity: .4;
+					margin:0;
 				}
+				p {
+					font-size: 16px;
+					margin-bottom: 0;
+					display: inline;
+					&:last-child { margin-bottom: 0; }
+					&.date{
+						font-size: 10px;
+						font-style: italic;
+						opacity: .4;
+					}
+				}
+				.loser{
+					opacity: .3;
+				}
+
 			}
-			h5 {
-				font-size: 12px;
-				margin-bottom: 10px;
-				color: $gray;
-				text-align: center;
-			}
-			p {
-				color: #FFF;
-				font-size: 20px;
-				margin: 0 auto 20px;
-				line-height: 30px;
-				font-style: italic;
-				&:last-child { margin-bottom: 0; }
-			}
+		}
+		// using for all my close icons
+		.ion-close-round{
+			display: none;
+			position: absolute;
+			top: 0;
+			right: 0;
+			padding: 10px;
+			margin-right: 3px;
+			opacity: .2;
+			cursor: pointer;
 		}
 
 		&:hover {
 			.record-score { @include translate(0,-40px); }
 		}
-		&.clicked { .about { @include translate(0,-$item-height); } }
+		&.clicked { 
+			.about { @include translate(0,-$item-height); } 
+			.ion-close-round { display: block; };
+		}
 	}
 	
 	/*------------------------------------*\

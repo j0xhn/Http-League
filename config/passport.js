@@ -221,7 +221,6 @@ passport.use(new GitHubStrategy(secrets.github, function(req, accessToken, refre
           req.flash('errors', { msg: 'There is already an account using this email address. Sign in to that account and link it with GitHub manually from Account Settings.' });
           done(err);
         } else {
-          debugger;
           var user = new User();
           user.email = profile._json.email;
           user.github = profile.id;

@@ -20,7 +20,9 @@ block content
 							p.name #{opponent.profile.name}
 							p.score-space #{opponent.profile.score}
 							h5 #{opponent.profile.company}
+
 						.record-score
+							span.ion-close-round.close-record-score
 							p.f16.pad10b 
 								i.fa.fa-pencil-square-o
 								| record scores
@@ -52,12 +54,20 @@ block content
 										| Log in with Facebook
 									
 						.about
-							span.ion-ios-close-empty
-							h5 Current Rank : #{opponent.profile.rank}
-								each match in opponent.matches
-									h5 #{match.dateString}
-									p #{match.winner.rank} #{match.winner.name} #{match.winner.score} - #{match.winner.wins}
-									p #{match.loser.rank} #{match.loser.name} #{match.loser.score} - #{match.loser.wins}
+							span.ion-close-round.close-about
+							each match in opponent.matches
+								.match
+									p.date #{match.dateString}
+									.winner
+										p ##{match.winner.rank} #{match.winner.name} (#{match.winner.score})
+										p.fr #{match.winner.wins}
+									.loser
+										p ##{match.loser.rank} #{match.loser.name} (#{match.loser.score})
+										p.fr #{match.loser.wins}
+	
+	script.
+		var users = !{JSON.stringify(users).replace(/<\//g, "<\\/")};
+		var user = !{JSON.stringify(user).replace(/<\//g, "<\\/")};
 									
 				
 				

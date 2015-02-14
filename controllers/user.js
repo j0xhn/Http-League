@@ -82,6 +82,7 @@ exports.recordScore = function(req, res, next) {
       // inverse to account for 1 is great, 5 is bad
       if(winnerParam.profile.rank > loserParam.profile.rank){ 
         // swap the ranks
+        swapRank = winnerParam.profile.rank;
         winnerParam.profile.rank = loserParam.profile.rank;
         loserParam.profile.rank = swapRank;
       } 
@@ -131,7 +132,7 @@ exports.recordScore = function(req, res, next) {
     createMatchSnapshot(winnerObject, loserObject);
 
     assignPointsAndRankAndSave(match, winnerObject, loserObject).then(function(){
-      res.send({ success : true });
+      res.send({ success : {message : 'Successfully Recorded Score'} });
     }).catch(function(err){
       handleError(err);
       res.send({ error: { message: err.message || err.toString() }});
@@ -286,7 +287,7 @@ exports.postUpdateProfile = function(req, res, next) {
  * Update current password.
  * @param password
  */
-
+ 
 exports.postUpdatePassword = function(req, res, next) {
   req.assert('password', 'Password must be at least 4 characters long').len(4);
   req.assert('confirmPassword', 'Passwords do not match').equals(req.body.password);

@@ -1,42 +1,93 @@
+(function(){
+  "use strict";
 
-// item elements
-$('.item .person img, .item .person .name').on({
-    click: function () {
-        $(this).parent().parent().toggleClass('clicked');
+  function getObjects(obj, key, val) {
+    var objects = [];
+    for (var i in obj) {
+        if (!obj.hasOwnProperty(i)) continue;
+        if (typeof obj[i] == 'object') {
+            objects = objects.concat(getObjects(obj[i], key, val));
+        } else if (i == key && obj[key] == val) {
+            objects.push(obj);
+        }
     }
-});
+    return objects;
+}
 
-$('.item .about').on({
-    click: function () {
-        $(this).parent().toggleClass('clicked');
-    }
-});
+    /*------------------------------------*\
 
-$('.item .record-score').on({
-    click: function () {
-        $(this).toggleClass('clicked');
-    }
-});
+        #ABOUT
 
-$('.item .record-score input').on({ // stops it from going up parent tree and registering click to .record-store
-	click: function(e){
-		e.stopPropagation();
-	}
-})
+    \*------------------------------------*/
+    $('.item .person img, .item .person .name').on({
+        click: function () {
+            $(this).parent().parent().toggleClass('clicked');
+        }
+    });
 
-// $('.record-score').on('submit', function(){
-//     debugger;
-//     $.ajax({
-//             type: 'POST',
-//             url: '/app/recordScore/' + $(this).opponent.value,
-//             data: { userWins: $(this).userWins.value, 
-//                     opponentWins: $(this).opponentWins.value },
-//             success: function (result) {
-//                 alert('success');
-//             },
-//             error: function () {
-//                 alert('error');
-//             }
-//         });
-//         return false;
-// })
+    // click on about section to close
+    $('.item .about .ion-close-round').on({
+        click: function () {
+            $(this).parent().parent().toggleClass('clicked');
+        }
+    });
+
+
+    /*------------------------------------*\
+
+        #USER
+
+    \*------------------------------------*/
+    getObjects(users, 'id', 'A'); 
+
+
+
+    /*------------------------------------*\
+
+        #RECORD SCORE
+
+    \*------------------------------------*/
+    $('body').on('click', '.item .record-score', function (ev) {
+        $(this).addClass('clicked');
+    });
+
+    // record score hide
+    $('body').on('click', '.item .record-score .close-record-score', function (ev) {
+        ev.stopPropagation();
+        $(this).parent().removeClass('clicked');
+    });
+
+
+    $('.item .record-score input').on({ // stops it from going up parent tree and registering click to .record-store
+    	click: function(e){
+    		e.stopPropagation();
+    	}
+    });
+
+    $('body').on('submit', 'form.js-record-score', function (ev) {
+        ev.preventDefault();
+        ev.stopPropagation();
+
+        var form = $(this).closest('form.js-record-score').serialize();
+        var elm = $(this).parent();
+
+        $.ajax( {
+         url: '/app/recordScore/' + $(this).find('.js-record-score-oid').val(),
+         data: form,
+         type: 'post',
+         success: function (res) {
+             if(res.success){
+                // congragulate, tell to reload page
+             } else {
+                // display error
+             }
+         }
+        }).then(function () {
+            elm.removeClass('clicked');
+        });
+      });
+
+    $('body').on('click', 'form.js-record-score .btn', function (ev) {
+        ev.stopPropagation();
+    });
+})();
