@@ -38,8 +38,8 @@
         #USER
 
     \*------------------------------------*/
-    getObjects(users, 'id', 'A'); 
-
+    // removes ability to report score of user playing against user
+    $('input.js-record-score-oid[value='+ user._id +']').parent().parent().remove();
 
 
     /*------------------------------------*\
