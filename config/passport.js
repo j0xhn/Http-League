@@ -172,57 +172,19 @@ passport.use(new FacebookStrategy(secrets.facebook, function(req, accessToken, r
           user.tokens.push({ kind: 'facebook', accessToken: accessToken });
           user.profile.name = profile.displayName;
           user.profile.gender = profile._json.gender;
-          user.profile.picture = 'https://graph.facebook.com/' + profile.id + '/picture?type=large';
+          user.profile.picture = 'https://graph.facebook.com/' + profile.id + '/picture?width=150&height=150 ';
           user.profile.location = (profile._json.location) ? profile._json.location.name : '';
-        
 
-          // attempt 1
-          // user.profile.rank = generateRank().then(function() { 
-          //   user.save(function(err) {
-          //     debugger;
-          //     done(err, user);
-          //   });
-          // })
-
-          // attempt 2
-          // user.profile.rank = generateRank().then(function(docs){
-          //   debugger;
-          //   user.save(function(err) {
-          //     done(err, user);
-          //   });
-          // });
-          
-          // attempt 3 - gives me error "ValidationError: Cast to number failed for value "[object Object]" at path "profile.rank""
-          // user.profile.rank = User.count().exec(function (err, totalUserCount) {
-          //   if (err) return handleError(err);
-          //   user.profile.rank = parseInt(totalUserCount,10);
-          // }).then(function(){
-          //   user.save(function(err) {
-          //     debugger;
-          //     done(err, user);
-          //   });
-          // });
-
-          // attempt 4 (see above in generateRank function)
-          // user.profile.rank = generateRank().then(function(dbdata){
-          //   debugger
-          //   user.profile.rank = dbdata;
-          //   user.save(function(err) {
-          //     debugger;
-          //     done(err, user);
-          //   });
-          // });
-
-          // attempt 5
+          // attempt 5 to assign rank
           User.count().exec().then(function(dbdata){
-            user.profile.rank = dbdata;
+            user.profile.rank = dbdata + 1;
             user.save(function(err) {
               done(err, user);
-            })
+            });
           });
           
           
-        };
+        }
       });
     });
   }
@@ -259,6 +221,7 @@ passport.use(new GitHubStrategy(secrets.github, function(req, accessToken, refre
           req.flash('errors', { msg: 'There is already an account using this email address. Sign in to that account and link it with GitHub manually from Account Settings.' });
           done(err);
         } else {
+          debugger;
           var user = new User();
           user.email = profile._json.email;
           user.github = profile.id;
@@ -268,8 +231,12 @@ passport.use(new GitHubStrategy(secrets.github, function(req, accessToken, refre
           user.profile.location = profile._json.location;
           user.profile.website = profile._json.blog;
           user.profile.rank = generateRank();
-          user.save(function(err) {
-            done(err, user);
+           // attempt 5 to assign rank
+          User.count().exec().then(function(dbdata){
+            user.profile.rank = dbdata + 1;
+            user.save(function(err) {
+              done(err, user);
+            });
           });
         }
       });
