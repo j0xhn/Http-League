@@ -38,8 +38,10 @@
         #USER
 
     \*------------------------------------*/
-    // removes ability to report score of user playing against user
-    $('input.js-record-score-oid[value='+ user._id +']').parent().parent().remove();
+    var userItem = $('input.js-record-score-oid[value='+ user._id + ']').parent().parent().parent();
+    userItem.find('a.action').replaceWith("<a href='/account'><i class='fa fa-cog f10'></i>edit profile</a>"); // removes "challenge" option
+    userItem.find('.record-score').remove(); // removes report score
+
 
 
     /*------------------------------------*\

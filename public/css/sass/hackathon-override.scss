@@ -18,6 +18,14 @@
 	color: white;
 }
 
+a{
+	color: $jBlue;
+}
+
+a:hover{
+	color: $jBlueDarker;
+}
+
 .navbar-brand {
 	transition: none;
 }

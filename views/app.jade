@@ -20,7 +20,7 @@ block content
 							p.name #{opponent.profile.name}
 							p.score-space #{opponent.profile.score}
 							p.meta #{opponent.profile.company} <span class='txt-normal txt-gray'>&nbsp;&nbsp;|&nbsp;&nbsp;</span> #{opponent.profile.location}
-							.btn.a(href!='mailto: #{opponent.email}') challenge 
+							a.action(href!='mailto:#{opponent.email}?subject=I challenge you!' target="_blank") <i class="fa fa-trophy f10"></i>challenge 
 
 						.record-score
 							span.ion-close-round.close-record-score
