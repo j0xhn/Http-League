@@ -65,10 +65,10 @@ block content
 									.loser
 										p ##{match.loser.rank} #{match.loser.name} (#{match.loser.score})
 										p.fr #{match.loser.wins}
-	
-	script.
-		var users = !{JSON.stringify(users).replace(/<\//g, "<\\/")};
-		var user = !{JSON.stringify(user).replace(/<\//g, "<\\/")};
-									
-				
+		if user
+			script.
+				var users = !{JSON.stringify(users).replace(/<\//g, "<\\/")};
+				var user = !{JSON.stringify(user).replace(/<\//g, "<\\/")};
+										
+					
 				

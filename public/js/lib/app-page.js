@@ -38,10 +38,12 @@
         #USER
 
     \*------------------------------------*/
-    var userItem = $('input.js-record-score-oid[value='+ user._id + ']').parent().parent().parent();
-    userItem.find('a.action').replaceWith("<a href='/account'><i class='fa fa-cog f10'></i>edit profile</a>"); // removes "challenge" option
-    userItem.find('.record-score').remove(); // removes report score
-
+    if (window.user){
+        var userItem = $('input.js-record-score-oid[value='+ user._id + ']').parent().parent().parent();
+        userItem.find('a.action').replaceWith("<a href='/account'><i class='fa fa-cog f10'></i>edit profile</a>"); // removes "challenge" option
+        userItem.find('.record-score').remove(); // removes report score
+    }
+   
 
 
     /*------------------------------------*\
