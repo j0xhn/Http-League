@@ -1,5 +1,5 @@
 doctype html
-html
+html(ng-app="HttpLeagueApp")
   head
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
@@ -20,7 +20,7 @@ html
     //- everything else custom, is changed in master.scss file /css/master.scss
     != css('styles') 
     != css('master') 
-    
+
     //- Google Anayltics 
     include html/tracking-scripts.html
 
@@ -32,3 +32,7 @@ html
       include partials/footer
 
     != js('application')
+
+    //- Angular Scripts
+    script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js")
+    script(src="js/httpleague-angular.js")

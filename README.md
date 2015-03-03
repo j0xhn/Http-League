@@ -6,8 +6,8 @@ A Ping-pong ranking app for Jane.com and anyone who dare challenge her greatness
 
 For Business Games
 -----------------
-- Mobile Friendly with Search
-- Email sent to challengers
+- Mobile Friendly with Search (via angular?)
+- Email sent to challengers when challenge is setup
 - Challenge page setup to accept score / enter score OR only enter score for people you've played against.... I like having seperate game pages though
 
 

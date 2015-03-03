@@ -19,18 +19,14 @@
         #ABOUT
 
     \*------------------------------------*/
-    $('.item .person img, .item .person .name').on({
-        click: function () {
-            $(this).parent().parent().toggleClass('clicked');
-        }
-    });
+    // $('body').on('click', '.item .person img, .item .person .name',  function () {
+    //     $(this).parent().parent().toggleClass('clicked');
+    // });
 
-    // click on about section to close
-    $('.item .about .ion-close-round').on({
-        click: function () {
-            $(this).parent().parent().toggleClass('clicked');
-        }
-    });
+    // // click on about section to close
+    // $('body').on('click', '.item .about .ion-close-round', function() {
+    //     $(this).parent().parent().toggleClass('clicked');
+    // });
 
 
     /*------------------------------------*\

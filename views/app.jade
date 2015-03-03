@@ -1,74 +1,72 @@
 extends layout
 
 block content
-	.app-page
-		section.banner.bgMint
-			.content.max768
-				.col-sm-6.tac
-					img(src=assetPath('images/logo-fancy-600.png'))
-				.col-sm-6.txt-white.words
-					h1 Ping Pong at it's Nerdiest
-					p Find the best ping pong players from accross the land and challenge them to a duel of pure, unadulterated, pong skill.
-					
-		section.users
-			.content
-				each opponent in users
-					.item
-						.person
-							p.rank-space #{opponent.profile.rank}
-							img(src = opponent.profile.picture)
-							p.name #{opponent.profile.name}
-							p.score-space #{opponent.profile.score}
-							p.meta #{opponent.profile.company} <span class='txt-normal txt-gray'>&nbsp;&nbsp;|&nbsp;&nbsp;</span> #{opponent.profile.location}
-							a.action(href!='mailto:#{opponent.email}?subject=I challenge you!' target="_blank") <i class="fa fa-trophy f10"></i>challenge 
+  script.
+    window.users = !{JSON.stringify(users || []).replace(/<\//g, "<\\/")};
+    window.user = !{JSON.stringify(user || {}).replace(/<\//g, "<\\/")};
+  .app-page(ng-controller="RankController as RC")
+    section.banner.bgMint
+      .content.max768
+        .col-sm-6.tac
+          img(src=assetPath('images/logo-fancy-600.png'))
+        .col-sm-6.txt-white.words
+          h1 Ping Pong at it's Nerdiest
+          p Find the best ping pong players from accross the land and challenge them to a duel of pure, unadulterated, pong skill.
+          
+    section.users
+      .content
+        .item(ng-repeat="opponent in RC.users" ng-class="{clicked:opponent.clicked}")
+          .person(ng-click="opponent.clicked = !opponent.clicked")
+            p.rank-space {{opponent.profile.rank}}
+            img(ng-src="{{opponent.profile.picture}}")
+            p.name  {{opponent.profile.name}}
+            p.score-space  {{opponent.profile.score}}
+            p.meta
+              span  {{opponent.profile.company}}
+              span.txt-normal.txt-gray  &nbsp;&nbsp;|&nbsp;&nbsp;
+              span  {{opponent.profile.location}}
+            a.action(href!='mailto:{{opponent.email}}?subject=I challenge you!' target="_blank") <i class="fa fa-trophy f10"></i>challenge 
 
-						.record-score
-							span.ion-close-round.close-record-score
-							p.f16.pad10b 
-								i.fa.fa-pencil-square-o
-								| record scores
-								if user
-									p.o4.pad10b
-										| I hereby promise that the scores about to be entered below
-										| are an honest and true representation of
-										| a ping pong match that was played. Cross my heart  
-										| hope to die, stick a needle in my eye.
-									form.js-record-score
-										input.js-record-score-oid(type='hidden', name='opponentId', value='#{opponent._id}')
-										input(type='hidden', name='_csrf', value=_csrf)
-										.pad20b
-											.player
-												img(src='#{user.profile.picture}')
-												input(placeholder="wins" type='userWins', name='userWins', id='userWins', autocomplete="off")
-											.player
-												img(src='#{opponent.profile.picture}')
-												input(placeholder="wins" type='opponentWins', name='opponentWins', id='opponentWins', autocomplete="off")
-										button.btn.bgWhite.txt-mint.full(type='submit') 
-											| enter
-								else
-									p.o4 To record a score you must be logged in
-									a.btn.btn-block.btn-github.btn-social(href='/auth/github')
-										i.fa.fa-github
-										| Log in with GitHub
-									a.btn.btn-block.btn-facebook.btn-social(href='/auth/facebook')
-										i.fa.fa-facebook
-										| Log in with Facebook
-									
-						.about
-							span.ion-close-round.close-about
-							each match in opponent.matches
-								.match
-									p.date #{match.dateString}
-									.winner
-										p ##{match.winner.rank} #{match.winner.name} (#{match.winner.score})
-										p.fr #{match.winner.wins}
-									.loser
-										p ##{match.loser.rank} #{match.loser.name} (#{match.loser.score})
-										p.fr #{match.loser.wins}
-		if user
-			script.
-				var users = !{JSON.stringify(users).replace(/<\//g, "<\\/")};
-				var user = !{JSON.stringify(user).replace(/<\//g, "<\\/")};
-										
-					
-				
+          .record-score
+            span.ion-close-round.close-record-score
+            p.f16.pad10b 
+              i.fa.fa-pencil-square-o
+              | record scores
+              div(ng-if="user")
+                p.o4.pad10b
+                  | I hereby promise that the scores about to be entered below
+                  | are an honest and true representation of
+                  | a ping pong match that was played. Cross my heart  
+                  | hope to die, stick a needle in my eye.
+                form.js-record-score
+                  input.js-record-score-oid(type='hidden', name='{{opponentId}}', value='{{opponent._id}}')
+                  input(type='hidden', name='_csrf', value=_csrf)
+                  .pad20b
+                    .player
+                      img(ng-src='{{user.profile.picture}}')
+                      input(placeholder="wins" type='userWins', name='userWins', id='userWins', autocomplete="off")
+                    .player
+                      img(ng-src='{{opponent.profile.picture}}')
+                      input(placeholder="wins" type='opponentWins', name='opponentWins', id='opponentWins', autocomplete="off")
+                  button.btn.bgWhite.txt-mint.full(type='submit') 
+                    | enter
+              div(ng-if="!user")
+                p.o4 To record a score you must be logged in
+                a.btn.btn-block.btn-github.btn-social(href='/auth/github')
+                  i.fa.fa-github
+                  | Log in with GitHub
+                a.btn.btn-block.btn-facebook.btn-social(href='/auth/facebook')
+                  i.fa.fa-facebook
+                  | Log in with Facebook
+                
+          .about
+            span.ion-close-round.close-about(ng-click="opponent.clicked = false")
+              div(ng-repeat="match in opponent.matches")
+                .match
+                  p.date {{match.dateString}}
+                  .winner
+                    p {{match.winner.rank}} {{match.winner.name}} ({{match.winner.score}})
+                    p.fr {{match.winner.wins}}
+                  .loser
+                    p {{match.loser.rank}} {{match.loser.name}} ({{match.loser.score}})
+                    p.fr {{match.loser.wins}}
